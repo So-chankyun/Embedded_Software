@@ -1,0 +1,3162 @@
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 1
+
+
+   1               		.file	"project.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	__vector_10
+  10               		.type	__vector_10, @function
+  11               	__vector_10:
+  12 0000 1F92      		push __zero_reg__
+  13 0002 0F92      		push r0
+  14 0004 0FB6      		in r0,__SREG__
+  15 0006 0F92      		push r0
+  16 0008 1124      		clr __zero_reg__
+  17 000a 8F93      		push r24
+  18 000c 9F93      		push r25
+  19               	/* prologue: Signal */
+  20               	/* frame size = 0 */
+  21 000e 8091 0000 		lds r24,state
+  22 0012 9091 0000 		lds r25,(state)+1
+  23 0016 892B      		or r24,r25
+  24 0018 01F0      		breq .L6
+  25 001a 80E1      		ldi r24,lo8(16)
+  26 001c 88BB      		out 56-32,r24
+  27 001e 1092 0000 		sts (state)+1,__zero_reg__
+  28 0022 1092 0000 		sts state,__zero_reg__
+  29               	.L3:
+  30 0026 8091 0000 		lds r24,tone
+  31 002a 9091 0000 		lds r25,(tone)+1
+  32 002e 84BD      		out 68-32,r24
+  33               	/* epilogue start */
+  34 0030 9F91      		pop r25
+  35 0032 8F91      		pop r24
+  36 0034 0F90      		pop r0
+  37 0036 0FBE      		out __SREG__,r0
+  38 0038 0F90      		pop r0
+  39 003a 1F90      		pop __zero_reg__
+  40 003c 1895      		reti
+  41               	.L6:
+  42 003e 18BA      		out 56-32,__zero_reg__
+  43 0040 81E0      		ldi r24,lo8(1)
+  44 0042 90E0      		ldi r25,hi8(1)
+  45 0044 9093 0000 		sts (state)+1,r25
+  46 0048 8093 0000 		sts state,r24
+  47 004c 00C0      		rjmp .L3
+  48               		.size	__vector_10, .-__vector_10
+  49               	.global	init_adc
+  50               		.type	init_adc, @function
+  51               	init_adc:
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54 004e 17B8      		out 39-32,__zero_reg__
+  55 0050 87E8      		ldi r24,lo8(-121)
+  56 0052 86B9      		out 38-32,r24
+  57               	/* epilogue start */
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 2
+
+
+  58 0054 0895      		ret
+  59               		.size	init_adc, .-init_adc
+  60               	.global	read_adc
+  61               		.type	read_adc, @function
+  62               	read_adc:
+  63               	/* prologue: function */
+  64               	/* frame size = 0 */
+  65 0056 369A      		sbi 38-32,6
+  66               	.L10:
+  67 0058 349B      		sbis 38-32,4
+  68 005a 00C0      		rjmp .L10
+  69 005c 24B1      		in r18,36-32
+  70 005e 45B1      		in r20,37-32
+  71 0060 942F      		mov r25,r20
+  72 0062 80E0      		ldi r24,lo8(0)
+  73 0064 30E0      		ldi r19,lo8(0)
+  74 0066 282B      		or r18,r24
+  75 0068 392B      		or r19,r25
+  76 006a C901      		movw r24,r18
+  77               	/* epilogue start */
+  78 006c 0895      		ret
+  79               		.size	read_adc, .-read_adc
+  80               	.global	InitI2C
+  81               		.type	InitI2C, @function
+  82               	InitI2C:
+  83               	/* prologue: function */
+  84               	/* frame size = 0 */
+  85 006e 83E0      		ldi r24,lo8(3)
+  86 0070 82BB      		out 50-32,r24
+  87 0072 80B5      		in r24,64-32
+  88 0074 8B7F      		andi r24,lo8(-5)
+  89 0076 80BD      		out 64-32,r24
+  90 0078 1092 7100 		sts 113,__zero_reg__
+  91 007c 80E2      		ldi r24,lo8(32)
+  92 007e 8093 7000 		sts 112,r24
+  93 0082 84E4      		ldi r24,lo8(68)
+  94 0084 8093 7400 		sts 116,r24
+  95               	/* epilogue start */
+  96 0088 0895      		ret
+  97               		.size	InitI2C, .-InitI2C
+  98               	.global	write_twi_1byte_nopreset
+  99               		.type	write_twi_1byte_nopreset, @function
+ 100               	write_twi_1byte_nopreset:
+ 101               	/* prologue: function */
+ 102               	/* frame size = 0 */
+ 103 008a 982F      		mov r25,r24
+ 104 008c 84EA      		ldi r24,lo8(-92)
+ 105 008e 8093 7400 		sts 116,r24
+ 106               	.L30:
+ 107 0092 8091 7400 		lds r24,116
+ 108 0096 87FF      		sbrs r24,7
+ 109 0098 00C0      		rjmp .L30
+ 110 009a 8091 7100 		lds r24,113
+ 111 009e 887F      		andi r24,lo8(-8)
+ 112 00a0 8830      		cpi r24,lo8(8)
+ 113 00a2 01F0      		breq .L17
+ 114 00a4 8091 7100 		lds r24,113
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 3
+
+
+ 115 00a8 887F      		andi r24,lo8(-8)
+ 116 00aa 8031      		cpi r24,lo8(16)
+ 117 00ac 01F4      		brne .L30
+ 118               	.L17:
+ 119 00ae 88E9      		ldi r24,lo8(-104)
+ 120 00b0 8093 7300 		sts 115,r24
+ 121 00b4 84E8      		ldi r24,lo8(-124)
+ 122 00b6 8093 7400 		sts 116,r24
+ 123               	.L31:
+ 124 00ba 8091 7400 		lds r24,116
+ 125 00be 87FF      		sbrs r24,7
+ 126 00c0 00C0      		rjmp .L31
+ 127 00c2 8091 7100 		lds r24,113
+ 128 00c6 887F      		andi r24,lo8(-8)
+ 129 00c8 8831      		cpi r24,lo8(24)
+ 130 00ca 01F4      		brne .L31
+ 131 00cc 9093 7300 		sts 115,r25
+ 132 00d0 84E8      		ldi r24,lo8(-124)
+ 133 00d2 8093 7400 		sts 116,r24
+ 134               	.L32:
+ 135 00d6 8091 7400 		lds r24,116
+ 136 00da 87FF      		sbrs r24,7
+ 137 00dc 00C0      		rjmp .L32
+ 138 00de 8091 7100 		lds r24,113
+ 139 00e2 887F      		andi r24,lo8(-8)
+ 140 00e4 8832      		cpi r24,lo8(40)
+ 141 00e6 01F4      		brne .L32
+ 142 00e8 6093 7300 		sts 115,r22
+ 143 00ec 84E8      		ldi r24,lo8(-124)
+ 144 00ee 8093 7400 		sts 116,r24
+ 145               	.L33:
+ 146 00f2 8091 7400 		lds r24,116
+ 147 00f6 87FF      		sbrs r24,7
+ 148 00f8 00C0      		rjmp .L33
+ 149 00fa 8091 7100 		lds r24,113
+ 150 00fe 887F      		andi r24,lo8(-8)
+ 151 0100 8832      		cpi r24,lo8(40)
+ 152 0102 01F4      		brne .L33
+ 153 0104 84E9      		ldi r24,lo8(-108)
+ 154 0106 8093 7400 		sts 116,r24
+ 155               	/* epilogue start */
+ 156 010a 0895      		ret
+ 157               		.size	write_twi_1byte_nopreset, .-write_twi_1byte_nopreset
+ 158               	.global	write_twi_0byte_nopreset
+ 159               		.type	write_twi_0byte_nopreset, @function
+ 160               	write_twi_0byte_nopreset:
+ 161               	/* prologue: function */
+ 162               	/* frame size = 0 */
+ 163 010c 982F      		mov r25,r24
+ 164 010e 84EA      		ldi r24,lo8(-92)
+ 165 0110 8093 7400 		sts 116,r24
+ 166               	.L46:
+ 167 0114 8091 7400 		lds r24,116
+ 168 0118 87FF      		sbrs r24,7
+ 169 011a 00C0      		rjmp .L46
+ 170 011c 8091 7100 		lds r24,113
+ 171 0120 887F      		andi r24,lo8(-8)
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 4
+
+
+ 172 0122 8830      		cpi r24,lo8(8)
+ 173 0124 01F0      		breq .L36
+ 174 0126 8091 7100 		lds r24,113
+ 175 012a 887F      		andi r24,lo8(-8)
+ 176 012c 8031      		cpi r24,lo8(16)
+ 177 012e 01F4      		brne .L46
+ 178               	.L36:
+ 179 0130 88E9      		ldi r24,lo8(-104)
+ 180 0132 8093 7300 		sts 115,r24
+ 181 0136 84E8      		ldi r24,lo8(-124)
+ 182 0138 8093 7400 		sts 116,r24
+ 183               	.L47:
+ 184 013c 8091 7400 		lds r24,116
+ 185 0140 87FF      		sbrs r24,7
+ 186 0142 00C0      		rjmp .L47
+ 187 0144 8091 7100 		lds r24,113
+ 188 0148 887F      		andi r24,lo8(-8)
+ 189 014a 8831      		cpi r24,lo8(24)
+ 190 014c 01F4      		brne .L47
+ 191 014e 9093 7300 		sts 115,r25
+ 192 0152 84E8      		ldi r24,lo8(-124)
+ 193 0154 8093 7400 		sts 116,r24
+ 194               	.L48:
+ 195 0158 8091 7400 		lds r24,116
+ 196 015c 87FF      		sbrs r24,7
+ 197 015e 00C0      		rjmp .L48
+ 198 0160 8091 7100 		lds r24,113
+ 199 0164 887F      		andi r24,lo8(-8)
+ 200 0166 8832      		cpi r24,lo8(40)
+ 201 0168 01F4      		brne .L48
+ 202 016a 84E9      		ldi r24,lo8(-108)
+ 203 016c 8093 7400 		sts 116,r24
+ 204               	/* epilogue start */
+ 205 0170 0895      		ret
+ 206               		.size	write_twi_0byte_nopreset, .-write_twi_0byte_nopreset
+ 207               	.global	ReadTemperature
+ 208               		.type	ReadTemperature, @function
+ 209               	ReadTemperature:
+ 210               	/* prologue: function */
+ 211               	/* frame size = 0 */
+ 212 0172 84EA      		ldi r24,lo8(-92)
+ 213 0174 8093 7400 		sts 116,r24
+ 214               	.L50:
+ 215 0178 8091 7400 		lds r24,116
+ 216 017c 87FF      		sbrs r24,7
+ 217 017e 00C0      		rjmp .L50
+ 218 0180 89E9      		ldi r24,lo8(-103)
+ 219 0182 8093 7300 		sts 115,r24
+ 220 0186 84E8      		ldi r24,lo8(-124)
+ 221 0188 8093 7400 		sts 116,r24
+ 222               	.L51:
+ 223 018c 8091 7400 		lds r24,116
+ 224 0190 87FF      		sbrs r24,7
+ 225 0192 00C0      		rjmp .L51
+ 226 0194 84EC      		ldi r24,lo8(-60)
+ 227 0196 8093 7400 		sts 116,r24
+ 228               	.L52:
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 5
+
+
+ 229 019a 8091 7400 		lds r24,116
+ 230 019e 87FF      		sbrs r24,7
+ 231 01a0 00C0      		rjmp .L52
+ 232 01a2 3091 7300 		lds r19,115
+ 233 01a6 84E8      		ldi r24,lo8(-124)
+ 234 01a8 8093 7400 		sts 116,r24
+ 235               	.L53:
+ 236 01ac 8091 7400 		lds r24,116
+ 237 01b0 87FF      		sbrs r24,7
+ 238 01b2 00C0      		rjmp .L53
+ 239 01b4 2091 7300 		lds r18,115
+ 240 01b8 932F      		mov r25,r19
+ 241 01ba 80E0      		ldi r24,lo8(0)
+ 242 01bc 44E9      		ldi r20,lo8(-108)
+ 243 01be 4093 7400 		sts 116,r20
+ 244 01c2 30E0      		ldi r19,lo8(0)
+ 245 01c4 282B      		or r18,r24
+ 246 01c6 392B      		or r19,r25
+ 247 01c8 C901      		movw r24,r18
+ 248               	/* epilogue start */
+ 249 01ca 0895      		ret
+ 250               		.size	ReadTemperature, .-ReadTemperature
+ 251               	.global	showToneLEDTask
+ 252               		.type	showToneLEDTask, @function
+ 253               	showToneLEDTask:
+ 254 01cc 0F93      		push r16
+ 255 01ce 1F93      		push r17
+ 256 01d0 CF93      		push r28
+ 257 01d2 DF93      		push r29
+ 258               	/* prologue: function */
+ 259               	/* frame size = 0 */
+ 260 01d4 08E0      		ldi r16,lo8(8)
+ 261 01d6 10E0      		ldi r17,hi8(8)
+ 262 01d8 CFEF      		ldi r28,lo8(255)
+ 263 01da D0E0      		ldi r29,hi8(255)
+ 264               	.L60:
+ 265 01dc 8091 0000 		lds r24,mbox_tone
+ 266 01e0 9091 0000 		lds r25,(mbox_tone)+1
+ 267 01e4 60E0      		ldi r22,lo8(0)
+ 268 01e6 70E0      		ldi r23,hi8(0)
+ 269 01e8 40E0      		ldi r20,lo8(err)
+ 270 01ea 50E0      		ldi r21,hi8(err)
+ 271 01ec 0E94 0000 		call OSMboxPend
+ 272 01f0 65E1      		ldi r22,lo8(21)
+ 273 01f2 70E0      		ldi r23,hi8(21)
+ 274 01f4 0E94 0000 		call __divmodhi4
+ 275 01f8 C801      		movw r24,r16
+ 276 01fa 861B      		sub r24,r22
+ 277 01fc 970B      		sbc r25,r23
+ 278 01fe 9E01      		movw r18,r28
+ 279 0200 00C0      		rjmp 2f
+ 280 0202 3595      	1:	asr r19
+ 281 0204 2795      		ror r18
+ 282 0206 8A95      	2:	dec r24
+ 283 0208 02F4      		brpl 1b
+ 284 020a 2BBB      		out 59-32,r18
+ 285 020c 80E0      		ldi r24,lo8(0)
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 6
+
+
+ 286 020e 60E0      		ldi r22,lo8(0)
+ 287 0210 40E0      		ldi r20,lo8(0)
+ 288 0212 2AE0      		ldi r18,lo8(10)
+ 289 0214 30E0      		ldi r19,hi8(10)
+ 290 0216 0E94 0000 		call OSTimeDlyHMSM
+ 291 021a 00C0      		rjmp .L60
+ 292               		.size	showToneLEDTask, .-showToneLEDTask
+ 293               	.global	showSpeedTask
+ 294               		.type	showSpeedTask, @function
+ 295               	showSpeedTask:
+ 296 021c CF92      		push r12
+ 297 021e DF92      		push r13
+ 298 0220 EF92      		push r14
+ 299 0222 FF92      		push r15
+ 300 0224 0F93      		push r16
+ 301 0226 1F93      		push r17
+ 302 0228 DF93      		push r29
+ 303 022a CF93      		push r28
+ 304 022c CDB7      		in r28,__SP_L__
+ 305 022e DEB7      		in r29,__SP_H__
+ 306 0230 2897      		sbiw r28,8
+ 307 0232 0FB6      		in __tmp_reg__,__SREG__
+ 308 0234 F894      		cli
+ 309 0236 DEBF      		out __SP_H__,r29
+ 310 0238 0FBE      		out __SREG__,__tmp_reg__
+ 311 023a CDBF      		out __SP_L__,r28
+ 312               	/* prologue: function */
+ 313               	/* frame size = 8 */
+ 314 023c 8FEF      		ldi r24,lo8(-1)
+ 315 023e 84BB      		out 52-32,r24
+ 316 0240 8FE0      		ldi r24,lo8(15)
+ 317 0242 8093 6400 		sts 100,r24
+ 318 0246 6E01      		movw r12,r28
+ 319 0248 0894      		sec
+ 320 024a C11C      		adc r12,__zero_reg__
+ 321 024c D11C      		adc r13,__zero_reg__
+ 322 024e 90E1      		ldi r25,lo8(10000)
+ 323 0250 E92E      		mov r14,r25
+ 324 0252 97E2      		ldi r25,hi8(10000)
+ 325 0254 F92E      		mov r15,r25
+ 326               	.L68:
+ 327 0256 8091 0000 		lds r24,choice_task
+ 328 025a 9091 0000 		lds r25,(choice_task)+1
+ 329 025e 61E0      		ldi r22,lo8(1)
+ 330 0260 42E0      		ldi r20,lo8(2)
+ 331 0262 20E0      		ldi r18,lo8(0)
+ 332 0264 30E0      		ldi r19,hi8(0)
+ 333 0266 00E0      		ldi r16,lo8(err)
+ 334 0268 10E0      		ldi r17,hi8(err)
+ 335 026a 0E94 0000 		call OSFlagPend
+ 336 026e 8091 0000 		lds r24,choice_speed_grp
+ 337 0272 9091 0000 		lds r25,(choice_speed_grp)+1
+ 338 0276 62E0      		ldi r22,lo8(2)
+ 339 0278 42E0      		ldi r20,lo8(2)
+ 340 027a 20E0      		ldi r18,lo8(0)
+ 341 027c 30E0      		ldi r19,hi8(0)
+ 342 027e 0E94 0000 		call OSFlagPend
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 7
+
+
+ 343 0282 8091 0000 		lds r24,light
+ 344 0286 9091 0000 		lds r25,(light)+1
+ 345 028a 64E6      		ldi r22,lo8(100)
+ 346 028c 70E0      		ldi r23,hi8(100)
+ 347 028e 0E94 0000 		call __divmodhi4
+ 348 0292 CB01      		movw r24,r22
+ 349 0294 6930      		cpi r22,9
+ 350 0296 7105      		cpc r23,__zero_reg__
+ 351 0298 04F0      		brlt .L63
+ 352 029a E0E0      		ldi r30,lo8(0)
+ 353 029c F0E0      		ldi r31,hi8(0)
+ 354               	.L64:
+ 355 029e 8091 0000 		lds r24,digit
+ 356 02a2 8F83      		std Y+7,r24
+ 357 02a4 1886      		std Y+8,__zero_reg__
+ 358 02a6 8D83      		std Y+5,r24
+ 359 02a8 1E82      		std Y+6,__zero_reg__
+ 360 02aa 8091 0000 		lds r24,digit+1
+ 361 02ae 8B83      		std Y+3,r24
+ 362 02b0 1C82      		std Y+4,__zero_reg__
+ 363 02b2 E050      		subi r30,lo8(-(digit))
+ 364 02b4 F040      		sbci r31,hi8(-(digit))
+ 365 02b6 8081      		ld r24,Z
+ 366 02b8 8983      		std Y+1,r24
+ 367 02ba 1A82      		std Y+2,__zero_reg__
+ 368 02bc 85BB      		out 53-32,r24
+ 369 02be 8091 0000 		lds r24,fnd_sel
+ 370 02c2 8093 6500 		sts 101,r24
+ 371 02c6 20E0      		ldi r18,lo8(0)
+ 372 02c8 30E0      		ldi r19,hi8(0)
+ 373               	.L72:
+ 374 02ca C701      		movw r24,r14
+ 375               	/* #APP */
+ 376               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 377 02cc 0197      		1: sbiw r24,1
+ 378 02ce 01F4      		brne 1b
+ 379               	 ;  0 "" 2
+ 380               	/* #NOAPP */
+ 381 02d0 2F5F      		subi r18,lo8(-(1))
+ 382 02d2 3F4F      		sbci r19,hi8(-(1))
+ 383 02d4 2430      		cpi r18,4
+ 384 02d6 3105      		cpc r19,__zero_reg__
+ 385 02d8 04F4      		brge .L73
+ 386 02da F901      		movw r30,r18
+ 387 02dc EE0F      		lsl r30
+ 388 02de FF1F      		rol r31
+ 389 02e0 EC0D      		add r30,r12
+ 390 02e2 FD1D      		adc r31,r13
+ 391 02e4 8081      		ld r24,Z
+ 392 02e6 85BB      		out 53-32,r24
+ 393 02e8 F901      		movw r30,r18
+ 394 02ea E050      		subi r30,lo8(-(fnd_sel))
+ 395 02ec F040      		sbci r31,hi8(-(fnd_sel))
+ 396 02ee 8081      		ld r24,Z
+ 397 02f0 8093 6500 		sts 101,r24
+ 398 02f4 2130      		cpi r18,1
+ 399 02f6 3105      		cpc r19,__zero_reg__
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 8
+
+
+ 400 02f8 01F4      		brne .L72
+ 401 02fa AF9A      		sbi 53-32,7
+ 402 02fc 00C0      		rjmp .L72
+ 403               	.L73:
+ 404 02fe 80E0      		ldi r24,lo8(0)
+ 405 0300 60E0      		ldi r22,lo8(0)
+ 406 0302 40E0      		ldi r20,lo8(0)
+ 407 0304 22E0      		ldi r18,lo8(2)
+ 408 0306 30E0      		ldi r19,hi8(2)
+ 409 0308 0E94 0000 		call OSTimeDlyHMSM
+ 410 030c 00C0      		rjmp .L68
+ 411               	.L63:
+ 412 030e 0697      		sbiw r24,6
+ 413 0310 0397      		sbiw r24,3
+ 414 0312 00F0      		brlo .L65
+ 415 0314 E4E0      		ldi r30,lo8(4)
+ 416 0316 F0E0      		ldi r31,hi8(4)
+ 417 0318 00C0      		rjmp .L64
+ 418               	.L65:
+ 419 031a E2E0      		ldi r30,lo8(2)
+ 420 031c F0E0      		ldi r31,hi8(2)
+ 421 031e 00C0      		rjmp .L64
+ 422               		.size	showSpeedTask, .-showSpeedTask
+ 423               	.global	showTempLEDTask
+ 424               		.type	showTempLEDTask, @function
+ 425               	showTempLEDTask:
+ 426 0320 EF92      		push r14
+ 427 0322 FF92      		push r15
+ 428 0324 0F93      		push r16
+ 429 0326 1F93      		push r17
+ 430 0328 CF93      		push r28
+ 431 032a DF93      		push r29
+ 432               	/* prologue: function */
+ 433               	/* frame size = 0 */
+ 434 032c 28E0      		ldi r18,lo8(8)
+ 435 032e E22E      		mov r14,r18
+ 436 0330 F12C      		mov r15,__zero_reg__
+ 437 0332 CFEF      		ldi r28,lo8(255)
+ 438 0334 D0E0      		ldi r29,hi8(255)
+ 439               	.L75:
+ 440 0336 8091 0000 		lds r24,choice_task
+ 441 033a 9091 0000 		lds r25,(choice_task)+1
+ 442 033e 62E0      		ldi r22,lo8(2)
+ 443 0340 42E0      		ldi r20,lo8(2)
+ 444 0342 20E0      		ldi r18,lo8(0)
+ 445 0344 30E0      		ldi r19,hi8(0)
+ 446 0346 00E0      		ldi r16,lo8(err)
+ 447 0348 10E0      		ldi r17,hi8(err)
+ 448 034a 0E94 0000 		call OSFlagPend
+ 449 034e 8091 0000 		lds r24,enable_temp
+ 450 0352 9091 0000 		lds r25,(enable_temp)+1
+ 451 0356 64E0      		ldi r22,lo8(4)
+ 452 0358 42E0      		ldi r20,lo8(2)
+ 453 035a 20E0      		ldi r18,lo8(0)
+ 454 035c 30E0      		ldi r19,hi8(0)
+ 455 035e 0E94 0000 		call OSFlagPend
+ 456 0362 8091 0000 		lds r24,temp
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 9
+
+
+ 457 0366 9091 0000 		lds r25,(temp)+1
+ 458 036a 892F      		mov r24,r25
+ 459 036c 8F77      		andi r24,lo8(127)
+ 460 036e 65E0      		ldi r22,lo8(5)
+ 461 0370 0E94 0000 		call __udivmodqi4
+ 462 0374 9701      		movw r18,r14
+ 463 0376 281B      		sub r18,r24
+ 464 0378 3109      		sbc r19,__zero_reg__
+ 465 037a C901      		movw r24,r18
+ 466 037c 9E01      		movw r18,r28
+ 467 037e 00C0      		rjmp 2f
+ 468 0380 3595      	1:	asr r19
+ 469 0382 2795      		ror r18
+ 470 0384 8A95      	2:	dec r24
+ 471 0386 02F4      		brpl 1b
+ 472 0388 2BBB      		out 59-32,r18
+ 473 038a 80E0      		ldi r24,lo8(0)
+ 474 038c 60E0      		ldi r22,lo8(0)
+ 475 038e 40E0      		ldi r20,lo8(0)
+ 476 0390 24E6      		ldi r18,lo8(100)
+ 477 0392 30E0      		ldi r19,hi8(100)
+ 478 0394 0E94 0000 		call OSTimeDlyHMSM
+ 479 0398 00C0      		rjmp .L75
+ 480               		.size	showTempLEDTask, .-showTempLEDTask
+ 481               	.global	showWarmOrColdTask
+ 482               		.type	showWarmOrColdTask, @function
+ 483               	showWarmOrColdTask:
+ 484 039a 0F93      		push r16
+ 485 039c 1F93      		push r17
+ 486 039e CF93      		push r28
+ 487 03a0 DF93      		push r29
+ 488               	/* prologue: function */
+ 489               	/* frame size = 0 */
+ 490 03a2 8FEF      		ldi r24,lo8(-1)
+ 491 03a4 84BB      		out 52-32,r24
+ 492 03a6 8FE0      		ldi r24,lo8(15)
+ 493 03a8 8093 6400 		sts 100,r24
+ 494 03ac C0E4      		ldi r28,lo8(8000)
+ 495 03ae DFE1      		ldi r29,hi8(8000)
+ 496               	.L82:
+ 497 03b0 8091 0000 		lds r24,choice_task
+ 498 03b4 9091 0000 		lds r25,(choice_task)+1
+ 499 03b8 62E0      		ldi r22,lo8(2)
+ 500 03ba 42E0      		ldi r20,lo8(2)
+ 501 03bc 20E0      		ldi r18,lo8(0)
+ 502 03be 30E0      		ldi r19,hi8(0)
+ 503 03c0 00E0      		ldi r16,lo8(err)
+ 504 03c2 10E0      		ldi r17,hi8(err)
+ 505 03c4 0E94 0000 		call OSFlagPend
+ 506 03c8 8091 0000 		lds r24,enable_temp
+ 507 03cc 9091 0000 		lds r25,(enable_temp)+1
+ 508 03d0 62E0      		ldi r22,lo8(2)
+ 509 03d2 42E0      		ldi r20,lo8(2)
+ 510 03d4 20E0      		ldi r18,lo8(0)
+ 511 03d6 30E0      		ldi r19,hi8(0)
+ 512 03d8 0E94 0000 		call OSFlagPend
+ 513 03dc 8091 0000 		lds r24,choice_temp_grp
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 10
+
+
+ 514 03e0 9091 0000 		lds r25,(choice_temp_grp)+1
+ 515 03e4 62E0      		ldi r22,lo8(2)
+ 516 03e6 42E0      		ldi r20,lo8(2)
+ 517 03e8 20E0      		ldi r18,lo8(0)
+ 518 03ea 30E0      		ldi r19,hi8(0)
+ 519 03ec 0E94 0000 		call OSFlagPend
+ 520 03f0 8091 0000 		lds r24,temp
+ 521 03f4 9091 0000 		lds r25,(temp)+1
+ 522 03f8 97FD      		sbrc r25,7
+ 523 03fa 00C0      		rjmp .L86
+ 524               	.L78:
+ 525 03fc 492F      		mov r20,r25
+ 526 03fe 4F77      		andi r20,lo8(127)
+ 527 0400 A0E0      		ldi r26,lo8(fnd_sel)
+ 528 0402 B0E0      		ldi r27,hi8(fnd_sel)
+ 529 0404 23E0      		ldi r18,lo8(3)
+ 530 0406 30E0      		ldi r19,hi8(3)
+ 531 0408 4531      		cpi r20,lo8(21)
+ 532 040a 00F0      		brlo .L79
+ 533               	.L87:
+ 534 040c F901      		movw r30,r18
+ 535 040e E050      		subi r30,lo8(-(warm))
+ 536 0410 F040      		sbci r31,hi8(-(warm))
+ 537 0412 8081      		ld r24,Z
+ 538 0414 85BB      		out 53-32,r24
+ 539               	.L80:
+ 540 0416 8D91      		ld r24,X+
+ 541 0418 8093 6500 		sts 101,r24
+ 542 041c CE01      		movw r24,r28
+ 543               	/* #APP */
+ 544               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 545 041e 0197      		1: sbiw r24,1
+ 546 0420 01F4      		brne 1b
+ 547               	 ;  0 "" 2
+ 548               	/* #NOAPP */
+ 549 0422 2150      		subi r18,lo8(-(-1))
+ 550 0424 3040      		sbci r19,hi8(-(-1))
+ 551 0426 8FEF      		ldi r24,hi8(-1)
+ 552 0428 2F3F      		cpi r18,lo8(-1)
+ 553 042a 3807      		cpc r19,r24
+ 554 042c 01F4      		brne .+2
+ 555 042e 00C0      		rjmp .L82
+ 556 0430 4531      		cpi r20,lo8(21)
+ 557 0432 00F4      		brsh .L87
+ 558               	.L79:
+ 559 0434 F901      		movw r30,r18
+ 560 0436 E050      		subi r30,lo8(-(cold))
+ 561 0438 F040      		sbci r31,hi8(-(cold))
+ 562 043a 8081      		ld r24,Z
+ 563 043c 85BB      		out 53-32,r24
+ 564 043e 00C0      		rjmp .L80
+ 565               	.L86:
+ 566 0440 8095      		com r24
+ 567 0442 9095      		com r25
+ 568 0444 0197      		sbiw r24,1
+ 569 0446 00C0      		rjmp .L78
+ 570               		.size	showWarmOrColdTask, .-showWarmOrColdTask
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 11
+
+
+ 571               	.global	showTempTask
+ 572               		.type	showTempTask, @function
+ 573               	showTempTask:
+ 574 0448 CF92      		push r12
+ 575 044a DF92      		push r13
+ 576 044c EF92      		push r14
+ 577 044e FF92      		push r15
+ 578 0450 0F93      		push r16
+ 579 0452 1F93      		push r17
+ 580 0454 DF93      		push r29
+ 581 0456 CF93      		push r28
+ 582 0458 00D0      		rcall .
+ 583 045a 00D0      		rcall .
+ 584 045c CDB7      		in r28,__SP_L__
+ 585 045e DEB7      		in r29,__SP_H__
+ 586               	/* prologue: function */
+ 587               	/* frame size = 4 */
+ 588 0460 8FEF      		ldi r24,lo8(-1)
+ 589 0462 84BB      		out 52-32,r24
+ 590 0464 8FE0      		ldi r24,lo8(15)
+ 591 0466 8093 6400 		sts 100,r24
+ 592 046a 6E01      		movw r12,r28
+ 593 046c 0894      		sec
+ 594 046e C11C      		adc r12,__zero_reg__
+ 595 0470 D11C      		adc r13,__zero_reg__
+ 596 0472 30E4      		ldi r19,lo8(8000)
+ 597 0474 E32E      		mov r14,r19
+ 598 0476 3FE1      		ldi r19,hi8(8000)
+ 599 0478 F32E      		mov r15,r19
+ 600               	.L95:
+ 601 047a 8091 0000 		lds r24,choice_task
+ 602 047e 9091 0000 		lds r25,(choice_task)+1
+ 603 0482 62E0      		ldi r22,lo8(2)
+ 604 0484 42E0      		ldi r20,lo8(2)
+ 605 0486 20E0      		ldi r18,lo8(0)
+ 606 0488 30E0      		ldi r19,hi8(0)
+ 607 048a 00E0      		ldi r16,lo8(err)
+ 608 048c 10E0      		ldi r17,hi8(err)
+ 609 048e 0E94 0000 		call OSFlagPend
+ 610 0492 8091 0000 		lds r24,enable_temp
+ 611 0496 9091 0000 		lds r25,(enable_temp)+1
+ 612 049a 61E0      		ldi r22,lo8(1)
+ 613 049c 42E0      		ldi r20,lo8(2)
+ 614 049e 20E0      		ldi r18,lo8(0)
+ 615 04a0 30E0      		ldi r19,hi8(0)
+ 616 04a2 0E94 0000 		call OSFlagPend
+ 617 04a6 8091 0000 		lds r24,choice_temp_grp
+ 618 04aa 9091 0000 		lds r25,(choice_temp_grp)+1
+ 619 04ae 61E0      		ldi r22,lo8(1)
+ 620 04b0 42E0      		ldi r20,lo8(2)
+ 621 04b2 20E0      		ldi r18,lo8(0)
+ 622 04b4 30E0      		ldi r19,hi8(0)
+ 623 04b6 0E94 0000 		call OSFlagPend
+ 624 04ba 2091 0000 		lds r18,temp
+ 625 04be 3091 0000 		lds r19,(temp)+1
+ 626 04c2 37FD      		sbrc r19,7
+ 627 04c4 00C0      		rjmp .L89
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 12
+
+
+ 628 04c6 B3E1      		ldi r27,lo8(19)
+ 629               	.L90:
+ 630 04c8 432F      		mov r20,r19
+ 631 04ca 4F77      		andi r20,lo8(127)
+ 632 04cc 27FD      		sbrc r18,7
+ 633 04ce 00C0      		rjmp .L91
+ 634 04d0 A0E0      		ldi r26,lo8(0)
+ 635 04d2 E0E0      		ldi r30,lo8(0)
+ 636 04d4 F0E0      		ldi r31,hi8(0)
+ 637               	.L92:
+ 638 04d6 842F      		mov r24,r20
+ 639 04d8 6AE0      		ldi r22,lo8(10)
+ 640 04da 0E94 0000 		call __udivmodqi4
+ 641 04de 0E94 0000 		call __udivmodqi4
+ 642 04e2 592F      		mov r21,r25
+ 643 04e4 842F      		mov r24,r20
+ 644 04e6 0E94 0000 		call __udivmodqi4
+ 645 04ea E050      		subi r30,lo8(-(digit))
+ 646 04ec F040      		sbci r31,hi8(-(digit))
+ 647 04ee 8081      		ld r24,Z
+ 648 04f0 85BB      		out 53-32,r24
+ 649 04f2 8091 0000 		lds r24,fnd_sel
+ 650 04f6 8093 6500 		sts 101,r24
+ 651 04fa 20E0      		ldi r18,lo8(0)
+ 652 04fc 30E0      		ldi r19,hi8(0)
+ 653               	.L99:
+ 654 04fe F701      		movw r30,r14
+ 655               	/* #APP */
+ 656               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 657 0500 3197      		1: sbiw r30,1
+ 658 0502 01F4      		brne 1b
+ 659               	 ;  0 "" 2
+ 660               	/* #NOAPP */
+ 661 0504 2F5F      		subi r18,lo8(-(1))
+ 662 0506 3F4F      		sbci r19,hi8(-(1))
+ 663 0508 2430      		cpi r18,4
+ 664 050a 3105      		cpc r19,__zero_reg__
+ 665 050c 04F0      		brlt .+2
+ 666 050e 00C0      		rjmp .L95
+ 667 0510 A983      		std Y+1,r26
+ 668 0512 9A83      		std Y+2,r25
+ 669 0514 5B83      		std Y+3,r21
+ 670 0516 BC83      		std Y+4,r27
+ 671 0518 F601      		movw r30,r12
+ 672 051a E20F      		add r30,r18
+ 673 051c F31F      		adc r31,r19
+ 674 051e E081      		ld r30,Z
+ 675 0520 F0E0      		ldi r31,lo8(0)
+ 676 0522 E050      		subi r30,lo8(-(digit))
+ 677 0524 F040      		sbci r31,hi8(-(digit))
+ 678 0526 8081      		ld r24,Z
+ 679 0528 85BB      		out 53-32,r24
+ 680 052a F901      		movw r30,r18
+ 681 052c E050      		subi r30,lo8(-(fnd_sel))
+ 682 052e F040      		sbci r31,hi8(-(fnd_sel))
+ 683 0530 8081      		ld r24,Z
+ 684 0532 8093 6500 		sts 101,r24
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 13
+
+
+ 685 0536 2130      		cpi r18,1
+ 686 0538 3105      		cpc r19,__zero_reg__
+ 687 053a 01F4      		brne .L99
+ 688 053c AF9A      		sbi 53-32,7
+ 689 053e 00C0      		rjmp .L99
+ 690               	.L91:
+ 691 0540 A5E0      		ldi r26,lo8(5)
+ 692 0542 E5E0      		ldi r30,lo8(5)
+ 693 0544 F0E0      		ldi r31,hi8(5)
+ 694 0546 00C0      		rjmp .L92
+ 695               	.L89:
+ 696 0548 B1E1      		ldi r27,lo8(17)
+ 697 054a 2095      		com r18
+ 698 054c 3095      		com r19
+ 699 054e 2150      		subi r18,lo8(-(-1))
+ 700 0550 3040      		sbci r19,hi8(-(-1))
+ 701 0552 00C0      		rjmp .L90
+ 702               		.size	showTempTask, .-showTempTask
+ 703               	.global	PlaySongTask
+ 704               		.type	PlaySongTask, @function
+ 705               	PlaySongTask:
+ 706 0554 8F92      		push r8
+ 707 0556 9F92      		push r9
+ 708 0558 AF92      		push r10
+ 709 055a BF92      		push r11
+ 710 055c CF92      		push r12
+ 711 055e DF92      		push r13
+ 712 0560 EF92      		push r14
+ 713 0562 FF92      		push r15
+ 714 0564 0F93      		push r16
+ 715 0566 1F93      		push r17
+ 716 0568 CF93      		push r28
+ 717 056a DF93      		push r29
+ 718               	/* prologue: function */
+ 719               	/* frame size = 0 */
+ 720 056c 81E1      		ldi r24,lo8(17)
+ 721 056e 84BD      		out 68-32,r24
+ 722 0570 83E0      		ldi r24,lo8(3)
+ 723 0572 85BD      		out 69-32,r24
+ 724 0574 80E1      		ldi r24,lo8(16)
+ 725 0576 87BB      		out 55-32,r24
+ 726 0578 10E4      		ldi r17,lo8(-25536)
+ 727 057a 812E      		mov r8,r17
+ 728 057c 1CE9      		ldi r17,hi8(-25536)
+ 729 057e 912E      		mov r9,r17
+ 730 0580 C0E9      		ldi r28,lo8(400)
+ 731 0582 D1E0      		ldi r29,hi8(400)
+ 732               	.L139:
+ 733 0584 8091 0000 		lds r24,choice_task
+ 734 0588 9091 0000 		lds r25,(choice_task)+1
+ 735 058c 61E0      		ldi r22,lo8(1)
+ 736 058e 42E0      		ldi r20,lo8(2)
+ 737 0590 20E0      		ldi r18,lo8(0)
+ 738 0592 30E0      		ldi r19,hi8(0)
+ 739 0594 00E0      		ldi r16,lo8(err)
+ 740 0596 10E0      		ldi r17,hi8(err)
+ 741 0598 0E94 0000 		call OSFlagPend
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 14
+
+
+ 742 059c 8091 0000 		lds r24,choice_speed_grp
+ 743 05a0 9091 0000 		lds r25,(choice_speed_grp)+1
+ 744 05a4 61E0      		ldi r22,lo8(1)
+ 745 05a6 42E0      		ldi r20,lo8(2)
+ 746 05a8 20E0      		ldi r18,lo8(0)
+ 747 05aa 30E0      		ldi r19,hi8(0)
+ 748 05ac 0E94 0000 		call OSFlagPend
+ 749 05b0 8091 0000 		lds r24,light
+ 750 05b4 9091 0000 		lds r25,(light)+1
+ 751 05b8 64E6      		ldi r22,lo8(100)
+ 752 05ba 70E0      		ldi r23,hi8(100)
+ 753 05bc 0E94 0000 		call __divmodhi4
+ 754 05c0 8827      		clr r24
+ 755 05c2 77FD      		sbrc r23,7
+ 756 05c4 8095      		com r24
+ 757 05c6 982F      		mov r25,r24
+ 758 05c8 0E94 0000 		call __floatsisf
+ 759 05cc 7B01      		movw r14,r22
+ 760 05ce 8C01      		movw r16,r24
+ 761 05d0 20E0      		ldi r18,lo8(0x41000000)
+ 762 05d2 30E0      		ldi r19,hi8(0x41000000)
+ 763 05d4 40E0      		ldi r20,hlo8(0x41000000)
+ 764 05d6 51E4      		ldi r21,hhi8(0x41000000)
+ 765 05d8 0E94 0000 		call __gtsf2
+ 766 05dc 1816      		cp __zero_reg__,r24
+ 767 05de 04F0      		brlt .+2
+ 768 05e0 00C0      		rjmp .L140
+ 769 05e2 0F2E      		mov __tmp_reg__,r31
+ 770 05e4 F0E0      		ldi r31,lo8(0x3f000000)
+ 771 05e6 CF2E      		mov r12,r31
+ 772 05e8 F0E0      		ldi r31,hi8(0x3f000000)
+ 773 05ea DF2E      		mov r13,r31
+ 774 05ec F0E0      		ldi r31,hlo8(0x3f000000)
+ 775 05ee EF2E      		mov r14,r31
+ 776 05f0 FFE3      		ldi r31,hhi8(0x3f000000)
+ 777 05f2 FF2E      		mov r15,r31
+ 778 05f4 F02D      		mov r31,__tmp_reg__
+ 779               	.L103:
+ 780 05f6 E091 0000 		lds r30,song
+ 781 05fa F091 0000 		lds r31,(song)+1
+ 782 05fe 8091 0000 		lds r24,pointer
+ 783 0602 9091 0000 		lds r25,(pointer)+1
+ 784 0606 EE0F      		lsl r30
+ 785 0608 FF1F      		rol r31
+ 786 060a E050      		subi r30,lo8(-(song_list))
+ 787 060c F040      		sbci r31,hi8(-(song_list))
+ 788 060e 880F      		lsl r24
+ 789 0610 991F      		rol r25
+ 790 0612 0190      		ld __tmp_reg__,Z+
+ 791 0614 F081      		ld r31,Z
+ 792 0616 E02D      		mov r30,__tmp_reg__
+ 793 0618 E80F      		add r30,r24
+ 794 061a F91F      		adc r31,r25
+ 795 061c 8081      		ld r24,Z
+ 796 061e 9181      		ldd r25,Z+1
+ 797 0620 9093 0000 		sts (tone)+1,r25
+ 798 0624 8093 0000 		sts tone,r24
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 15
+
+
+ 799 0628 6091 0000 		lds r22,tone
+ 800 062c 7091 0000 		lds r23,(tone)+1
+ 801 0630 8091 0000 		lds r24,mbox_tone
+ 802 0634 9091 0000 		lds r25,(mbox_tone)+1
+ 803 0638 0E94 0000 		call OSMboxPost
+ 804 063c 8091 0000 		lds r24,tone
+ 805 0640 9091 0000 		lds r25,(tone)+1
+ 806 0644 8F5F      		subi r24,lo8(-1)
+ 807 0646 9F4F      		sbci r25,hi8(-1)
+ 808 0648 01F4      		brne .+2
+ 809 064a 00C0      		rjmp .L145
+ 810 064c 8091 0000 		lds r24,tone
+ 811 0650 9091 0000 		lds r25,(tone)+1
+ 812 0654 8E5F      		subi r24,lo8(-2)
+ 813 0656 9F4F      		sbci r25,hi8(-2)
+ 814 0658 01F4      		brne .+2
+ 815 065a 00C0      		rjmp .L146
+ 816 065c 87B7      		in r24,87-32
+ 817 065e 8064      		ori r24,lo8(64)
+ 818 0660 87BF      		out 87-32,r24
+ 819 0662 E091 0000 		lds r30,song
+ 820 0666 F091 0000 		lds r31,(song)+1
+ 821 066a 0091 0000 		lds r16,pointer
+ 822 066e 1091 0000 		lds r17,(pointer)+1
+ 823 0672 EE0F      		lsl r30
+ 824 0674 FF1F      		rol r31
+ 825 0676 E050      		subi r30,lo8(-(tempo_list))
+ 826 0678 F040      		sbci r31,hi8(-(tempo_list))
+ 827 067a C801      		movw r24,r16
+ 828 067c 880F      		lsl r24
+ 829 067e 991F      		rol r25
+ 830 0680 880F      		lsl r24
+ 831 0682 991F      		rol r25
+ 832 0684 0190      		ld __tmp_reg__,Z+
+ 833 0686 F081      		ld r31,Z
+ 834 0688 E02D      		mov r30,__tmp_reg__
+ 835 068a E80F      		add r30,r24
+ 836 068c F91F      		adc r31,r25
+ 837 068e C701      		movw r24,r14
+ 838 0690 B601      		movw r22,r12
+ 839 0692 2081      		ld r18,Z
+ 840 0694 3181      		ldd r19,Z+1
+ 841 0696 4281      		ldd r20,Z+2
+ 842 0698 5381      		ldd r21,Z+3
+ 843 069a 0E94 0000 		call __mulsf3
+ 844 069e 5B01      		movw r10,r22
+ 845 06a0 6C01      		movw r12,r24
+ 846 06a2 0F5F      		subi r16,lo8(-(1))
+ 847 06a4 1F4F      		sbci r17,hi8(-(1))
+ 848 06a6 1093 0000 		sts (pointer)+1,r17
+ 849 06aa 0093 0000 		sts pointer,r16
+ 850 06ae 20E0      		ldi r18,lo8(0x457a0000)
+ 851 06b0 30E0      		ldi r19,hi8(0x457a0000)
+ 852 06b2 4AE7      		ldi r20,hlo8(0x457a0000)
+ 853 06b4 55E4      		ldi r21,hhi8(0x457a0000)
+ 854 06b6 0E94 0000 		call __mulsf3
+ 855 06ba 7B01      		movw r14,r22
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 16
+
+
+ 856 06bc 8C01      		movw r16,r24
+ 857 06be 20E0      		ldi r18,lo8(0x3f800000)
+ 858 06c0 30E0      		ldi r19,hi8(0x3f800000)
+ 859 06c2 40E8      		ldi r20,hlo8(0x3f800000)
+ 860 06c4 5FE3      		ldi r21,hhi8(0x3f800000)
+ 861 06c6 0E94 0000 		call __ltsf2
+ 862 06ca 8823      		tst r24
+ 863 06cc 04F4      		brge .+2
+ 864 06ce 00C0      		rjmp .L147
+ 865 06d0 C801      		movw r24,r16
+ 866 06d2 B701      		movw r22,r14
+ 867 06d4 20E0      		ldi r18,lo8(0x477fff00)
+ 868 06d6 3FEF      		ldi r19,hi8(0x477fff00)
+ 869 06d8 4FE7      		ldi r20,hlo8(0x477fff00)
+ 870 06da 57E4      		ldi r21,hhi8(0x477fff00)
+ 871 06dc 0E94 0000 		call __gtsf2
+ 872 06e0 1816      		cp __zero_reg__,r24
+ 873 06e2 04F0      		brlt .+2
+ 874 06e4 00C0      		rjmp .L144
+ 875 06e6 C601      		movw r24,r12
+ 876 06e8 B501      		movw r22,r10
+ 877 06ea 20E0      		ldi r18,lo8(0x41200000)
+ 878 06ec 30E0      		ldi r19,hi8(0x41200000)
+ 879 06ee 40E2      		ldi r20,hlo8(0x41200000)
+ 880 06f0 51E4      		ldi r21,hhi8(0x41200000)
+ 881 06f2 0E94 0000 		call __mulsf3
+ 882 06f6 0E94 0000 		call __fixunssfsi
+ 883 06fa CB01      		movw r24,r22
+ 884 06fc 672B      		or r22,r23
+ 885 06fe 01F0      		breq .L122
+ 886               	.L134:
+ 887 0700 FE01      		movw r30,r28
+ 888               	/* #APP */
+ 889               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 890 0702 3197      		1: sbiw r30,1
+ 891 0704 01F4      		brne 1b
+ 892               	 ;  0 "" 2
+ 893               	/* #NOAPP */
+ 894 0706 0197      		sbiw r24,1
+ 895 0708 01F4      		brne .L134
+ 896               	.L122:
+ 897 070a 87B7      		in r24,87-32
+ 898 070c 8F7B      		andi r24,lo8(-65)
+ 899 070e 87BF      		out 87-32,r24
+ 900 0710 C401      		movw r24,r8
+ 901               	/* #APP */
+ 902               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 903 0712 0197      		1: sbiw r24,1
+ 904 0714 01F4      		brne 1b
+ 905               	 ;  0 "" 2
+ 906               	/* #NOAPP */
+ 907 0716 00C0      		rjmp .L139
+ 908               	.L140:
+ 909 0718 C801      		movw r24,r16
+ 910 071a B701      		movw r22,r14
+ 911 071c 20E0      		ldi r18,lo8(0x41000000)
+ 912 071e 30E0      		ldi r19,hi8(0x41000000)
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 17
+
+
+ 913 0720 40E0      		ldi r20,hlo8(0x41000000)
+ 914 0722 51E4      		ldi r21,hhi8(0x41000000)
+ 915 0724 0E94 0000 		call __lesf2
+ 916 0728 1816      		cp __zero_reg__,r24
+ 917 072a 04F0      		brlt .L104
+ 918 072c C801      		movw r24,r16
+ 919 072e B701      		movw r22,r14
+ 920 0730 20E0      		ldi r18,lo8(0x40a00000)
+ 921 0732 30E0      		ldi r19,hi8(0x40a00000)
+ 922 0734 40EA      		ldi r20,hlo8(0x40a00000)
+ 923 0736 50E4      		ldi r21,hhi8(0x40a00000)
+ 924 0738 0E94 0000 		call __gtsf2
+ 925 073c 1816      		cp __zero_reg__,r24
+ 926 073e 04F4      		brge .L104
+ 927 0740 0F2E      		mov __tmp_reg__,r31
+ 928 0742 FDEC      		ldi r31,lo8(0x3ecccccd)
+ 929 0744 CF2E      		mov r12,r31
+ 930 0746 FCEC      		ldi r31,hi8(0x3ecccccd)
+ 931 0748 DF2E      		mov r13,r31
+ 932 074a FCEC      		ldi r31,hlo8(0x3ecccccd)
+ 933 074c EF2E      		mov r14,r31
+ 934 074e FEE3      		ldi r31,hhi8(0x3ecccccd)
+ 935 0750 FF2E      		mov r15,r31
+ 936 0752 F02D      		mov r31,__tmp_reg__
+ 937 0754 00C0      		rjmp .L103
+ 938               	.L104:
+ 939 0756 0F2E      		mov __tmp_reg__,r31
+ 940 0758 FAE9      		ldi r31,lo8(0x3e99999a)
+ 941 075a CF2E      		mov r12,r31
+ 942 075c F9E9      		ldi r31,hi8(0x3e99999a)
+ 943 075e DF2E      		mov r13,r31
+ 944 0760 F9E9      		ldi r31,hlo8(0x3e99999a)
+ 945 0762 EF2E      		mov r14,r31
+ 946 0764 FEE3      		ldi r31,hhi8(0x3e99999a)
+ 947 0766 FF2E      		mov r15,r31
+ 948 0768 F02D      		mov r31,__tmp_reg__
+ 949 076a 00C0      		rjmp .L103
+ 950               	.L145:
+ 951 076c 8091 0000 		lds r24,song
+ 952 0770 9091 0000 		lds r25,(song)+1
+ 953 0774 0196      		adiw r24,1
+ 954 0776 9093 0000 		sts (song)+1,r25
+ 955 077a 8093 0000 		sts song,r24
+ 956 077e 8091 0000 		lds r24,song
+ 957 0782 9091 0000 		lds r25,(song)+1
+ 958 0786 63E0      		ldi r22,lo8(3)
+ 959 0788 70E0      		ldi r23,hi8(3)
+ 960 078a 0E94 0000 		call __divmodhi4
+ 961 078e 9093 0000 		sts (song)+1,r25
+ 962 0792 8093 0000 		sts song,r24
+ 963 0796 1092 0000 		sts (pointer)+1,__zero_reg__
+ 964 079a 1092 0000 		sts pointer,__zero_reg__
+ 965 079e 28EB      		ldi r18,lo8(3000)
+ 966 07a0 3BE0      		ldi r19,hi8(3000)
+ 967               	.L108:
+ 968 07a2 CE01      		movw r24,r28
+ 969               	/* #APP */
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 18
+
+
+ 970               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 971 07a4 0197      		1: sbiw r24,1
+ 972 07a6 01F4      		brne 1b
+ 973               	 ;  0 "" 2
+ 974               	/* #NOAPP */
+ 975 07a8 2150      		subi r18,lo8(-(-1))
+ 976 07aa 3040      		sbci r19,hi8(-(-1))
+ 977 07ac 01F4      		brne .L108
+ 978 07ae 00C0      		rjmp .L139
+ 979               	.L146:
+ 980 07b0 87B7      		in r24,87-32
+ 981 07b2 8F7B      		andi r24,lo8(-65)
+ 982 07b4 87BF      		out 87-32,r24
+ 983 07b6 E091 0000 		lds r30,song
+ 984 07ba F091 0000 		lds r31,(song)+1
+ 985 07be 0091 0000 		lds r16,pointer
+ 986 07c2 1091 0000 		lds r17,(pointer)+1
+ 987 07c6 EE0F      		lsl r30
+ 988 07c8 FF1F      		rol r31
+ 989 07ca E050      		subi r30,lo8(-(tempo_list))
+ 990 07cc F040      		sbci r31,hi8(-(tempo_list))
+ 991 07ce C801      		movw r24,r16
+ 992 07d0 880F      		lsl r24
+ 993 07d2 991F      		rol r25
+ 994 07d4 880F      		lsl r24
+ 995 07d6 991F      		rol r25
+ 996 07d8 0190      		ld __tmp_reg__,Z+
+ 997 07da F081      		ld r31,Z
+ 998 07dc E02D      		mov r30,__tmp_reg__
+ 999 07de E80F      		add r30,r24
+ 1000 07e0 F91F      		adc r31,r25
+ 1001 07e2 C701      		movw r24,r14
+ 1002 07e4 B601      		movw r22,r12
+ 1003 07e6 2081      		ld r18,Z
+ 1004 07e8 3181      		ldd r19,Z+1
+ 1005 07ea 4281      		ldd r20,Z+2
+ 1006 07ec 5381      		ldd r21,Z+3
+ 1007 07ee 0E94 0000 		call __mulsf3
+ 1008 07f2 5B01      		movw r10,r22
+ 1009 07f4 6C01      		movw r12,r24
+ 1010 07f6 0F5F      		subi r16,lo8(-(1))
+ 1011 07f8 1F4F      		sbci r17,hi8(-(1))
+ 1012 07fa 1093 0000 		sts (pointer)+1,r17
+ 1013 07fe 0093 0000 		sts pointer,r16
+ 1014 0802 20E0      		ldi r18,lo8(0x457a0000)
+ 1015 0804 30E0      		ldi r19,hi8(0x457a0000)
+ 1016 0806 4AE7      		ldi r20,hlo8(0x457a0000)
+ 1017 0808 55E4      		ldi r21,hhi8(0x457a0000)
+ 1018 080a 0E94 0000 		call __mulsf3
+ 1019 080e 7B01      		movw r14,r22
+ 1020 0810 8C01      		movw r16,r24
+ 1021 0812 20E0      		ldi r18,lo8(0x3f800000)
+ 1022 0814 30E0      		ldi r19,hi8(0x3f800000)
+ 1023 0816 40E8      		ldi r20,hlo8(0x3f800000)
+ 1024 0818 5FE3      		ldi r21,hhi8(0x3f800000)
+ 1025 081a 0E94 0000 		call __ltsf2
+ 1026 081e 8823      		tst r24
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 19
+
+
+ 1027 0820 04F4      		brge .+2
+ 1028 0822 00C0      		rjmp .L148
+ 1029 0824 C801      		movw r24,r16
+ 1030 0826 B701      		movw r22,r14
+ 1031 0828 20E0      		ldi r18,lo8(0x477fff00)
+ 1032 082a 3FEF      		ldi r19,hi8(0x477fff00)
+ 1033 082c 4FE7      		ldi r20,hlo8(0x477fff00)
+ 1034 082e 57E4      		ldi r21,hhi8(0x477fff00)
+ 1035 0830 0E94 0000 		call __gtsf2
+ 1036 0834 1816      		cp __zero_reg__,r24
+ 1037 0836 04F4      		brge .L142
+ 1038 0838 C601      		movw r24,r12
+ 1039 083a B501      		movw r22,r10
+ 1040 083c 20E0      		ldi r18,lo8(0x41200000)
+ 1041 083e 30E0      		ldi r19,hi8(0x41200000)
+ 1042 0840 40E2      		ldi r20,hlo8(0x41200000)
+ 1043 0842 51E4      		ldi r21,hhi8(0x41200000)
+ 1044 0844 0E94 0000 		call __mulsf3
+ 1045 0848 0E94 0000 		call __fixunssfsi
+ 1046 084c CB01      		movw r24,r22
+ 1047 084e 672B      		or r22,r23
+ 1048 0850 01F4      		brne .+2
+ 1049 0852 00C0      		rjmp .L139
+ 1050               	.L133:
+ 1051 0854 FE01      		movw r30,r28
+ 1052               	/* #APP */
+ 1053               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1054 0856 3197      		1: sbiw r30,1
+ 1055 0858 01F4      		brne 1b
+ 1056               	 ;  0 "" 2
+ 1057               	/* #NOAPP */
+ 1058 085a 0197      		sbiw r24,1
+ 1059 085c 01F4      		brne .L133
+ 1060 085e 00C0      		rjmp .L139
+ 1061               	.L144:
+ 1062 0860 C801      		movw r24,r16
+ 1063 0862 B701      		movw r22,r14
+ 1064 0864 0E94 0000 		call __fixunssfsi
+ 1065               	.L119:
+ 1066 0868 CB01      		movw r24,r22
+ 1067               	/* #APP */
+ 1068               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1069 086a 0197      		1: sbiw r24,1
+ 1070 086c 01F4      		brne 1b
+ 1071               	 ;  0 "" 2
+ 1072               	/* #NOAPP */
+ 1073 086e 87B7      		in r24,87-32
+ 1074 0870 8F7B      		andi r24,lo8(-65)
+ 1075 0872 87BF      		out 87-32,r24
+ 1076 0874 C401      		movw r24,r8
+ 1077               	/* #APP */
+ 1078               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1079 0876 0197      		1: sbiw r24,1
+ 1080 0878 01F4      		brne 1b
+ 1081               	 ;  0 "" 2
+ 1082               	/* #NOAPP */
+ 1083 087a 00C0      		rjmp .L139
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 20
+
+
+ 1084               	.L147:
+ 1085 087c 61E0      		ldi r22,lo8(1)
+ 1086 087e 70E0      		ldi r23,hi8(1)
+ 1087 0880 00C0      		rjmp .L119
+ 1088               	.L142:
+ 1089 0882 C801      		movw r24,r16
+ 1090 0884 B701      		movw r22,r14
+ 1091 0886 0E94 0000 		call __fixunssfsi
+ 1092               	.L113:
+ 1093 088a CB01      		movw r24,r22
+ 1094               	/* #APP */
+ 1095               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1096 088c 0197      		1: sbiw r24,1
+ 1097 088e 01F4      		brne 1b
+ 1098               	 ;  0 "" 2
+ 1099               	/* #NOAPP */
+ 1100 0890 00C0      		rjmp .L139
+ 1101               	.L148:
+ 1102 0892 61E0      		ldi r22,lo8(1)
+ 1103 0894 70E0      		ldi r23,hi8(1)
+ 1104 0896 00C0      		rjmp .L113
+ 1105               		.size	PlaySongTask, .-PlaySongTask
+ 1106               	.global	readLightTask
+ 1107               		.type	readLightTask, @function
+ 1108               	readLightTask:
+ 1109 0898 0F93      		push r16
+ 1110 089a 1F93      		push r17
+ 1111               	/* prologue: function */
+ 1112               	/* frame size = 0 */
+ 1113               	.L150:
+ 1114 089c 8091 0000 		lds r24,choice_task
+ 1115 08a0 9091 0000 		lds r25,(choice_task)+1
+ 1116 08a4 61E0      		ldi r22,lo8(1)
+ 1117 08a6 42E0      		ldi r20,lo8(2)
+ 1118 08a8 20E0      		ldi r18,lo8(0)
+ 1119 08aa 30E0      		ldi r19,hi8(0)
+ 1120 08ac 00E0      		ldi r16,lo8(err)
+ 1121 08ae 10E0      		ldi r17,hi8(err)
+ 1122 08b0 0E94 0000 		call OSFlagPend
+ 1123 08b4 E091 0000 		lds r30,choice_speed_grp
+ 1124 08b8 F091 0000 		lds r31,(choice_speed_grp)+1
+ 1125 08bc 1382      		std Z+3,__zero_reg__
+ 1126               	/* #APP */
+ 1127               	 ;  493 "project.c" 1
+ 1128 08be F894      		cli
+ 1129               	 ;  0 "" 2
+ 1130               	/* #NOAPP */
+ 1131 08c0 0E94 0000 		call read_adc
+ 1132 08c4 9093 0000 		sts (light)+1,r25
+ 1133 08c8 8093 0000 		sts light,r24
+ 1134               	/* #APP */
+ 1135               	 ;  495 "project.c" 1
+ 1136 08cc 7894      		sei
+ 1137               	 ;  0 "" 2
+ 1138               	/* #NOAPP */
+ 1139 08ce 8091 0000 		lds r24,choice_speed_grp
+ 1140 08d2 9091 0000 		lds r25,(choice_speed_grp)+1
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 21
+
+
+ 1141 08d6 63E0      		ldi r22,lo8(3)
+ 1142 08d8 41E0      		ldi r20,lo8(1)
+ 1143 08da 9801      		movw r18,r16
+ 1144 08dc 0E94 0000 		call OSFlagPost
+ 1145 08e0 80E0      		ldi r24,lo8(0)
+ 1146 08e2 60E0      		ldi r22,lo8(0)
+ 1147 08e4 40E0      		ldi r20,lo8(0)
+ 1148 08e6 24EF      		ldi r18,lo8(500)
+ 1149 08e8 31E0      		ldi r19,hi8(500)
+ 1150 08ea 0E94 0000 		call OSTimeDlyHMSM
+ 1151 08ee 00C0      		rjmp .L150
+ 1152               		.size	readLightTask, .-readLightTask
+ 1153               	.global	TemperatureTask
+ 1154               		.type	TemperatureTask, @function
+ 1155               	TemperatureTask:
+ 1156 08f0 0F93      		push r16
+ 1157 08f2 1F93      		push r17
+ 1158               	/* prologue: function */
+ 1159               	/* frame size = 0 */
+ 1160 08f4 81E0      		ldi r24,lo8(1)
+ 1161 08f6 60E0      		ldi r22,lo8(0)
+ 1162 08f8 0E94 0000 		call write_twi_1byte_nopreset
+ 1163 08fc 80E0      		ldi r24,lo8(0)
+ 1164 08fe 0E94 0000 		call write_twi_0byte_nopreset
+ 1165               	.L153:
+ 1166 0902 8091 0000 		lds r24,choice_task
+ 1167 0906 9091 0000 		lds r25,(choice_task)+1
+ 1168 090a 62E0      		ldi r22,lo8(2)
+ 1169 090c 42E0      		ldi r20,lo8(2)
+ 1170 090e 20E0      		ldi r18,lo8(0)
+ 1171 0910 30E0      		ldi r19,hi8(0)
+ 1172 0912 00E0      		ldi r16,lo8(err)
+ 1173 0914 10E0      		ldi r17,hi8(err)
+ 1174 0916 0E94 0000 		call OSFlagPend
+ 1175 091a 8091 0000 		lds r24,enable_temp
+ 1176 091e 9091 0000 		lds r25,(enable_temp)+1
+ 1177 0922 60E0      		ldi r22,lo8(0)
+ 1178 0924 41E0      		ldi r20,lo8(1)
+ 1179 0926 9801      		movw r18,r16
+ 1180 0928 0E94 0000 		call OSFlagPost
+ 1181               	/* #APP */
+ 1182               	 ;  366 "project.c" 1
+ 1183 092c F894      		cli
+ 1184               	 ;  0 "" 2
+ 1185               	/* #NOAPP */
+ 1186 092e 0E94 0000 		call ReadTemperature
+ 1187 0932 9093 0000 		sts (temp)+1,r25
+ 1188 0936 8093 0000 		sts temp,r24
+ 1189               	/* #APP */
+ 1190               	 ;  368 "project.c" 1
+ 1191 093a 7894      		sei
+ 1192               	 ;  0 "" 2
+ 1193               	/* #NOAPP */
+ 1194 093c 8091 0000 		lds r24,enable_temp
+ 1195 0940 9091 0000 		lds r25,(enable_temp)+1
+ 1196 0944 67E0      		ldi r22,lo8(7)
+ 1197 0946 41E0      		ldi r20,lo8(1)
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 22
+
+
+ 1198 0948 9801      		movw r18,r16
+ 1199 094a 0E94 0000 		call OSFlagPost
+ 1200 094e 80E0      		ldi r24,lo8(0)
+ 1201 0950 60E0      		ldi r22,lo8(0)
+ 1202 0952 40E0      		ldi r20,lo8(0)
+ 1203 0954 24E6      		ldi r18,lo8(100)
+ 1204 0956 30E0      		ldi r19,hi8(100)
+ 1205 0958 0E94 0000 		call OSTimeDlyHMSM
+ 1206 095c 00C0      		rjmp .L153
+ 1207               		.size	TemperatureTask, .-TemperatureTask
+ 1208               	.global	__vector_5
+ 1209               		.type	__vector_5, @function
+ 1210               	__vector_5:
+ 1211 095e 1F92      		push __zero_reg__
+ 1212 0960 0F92      		push r0
+ 1213 0962 0FB6      		in r0,__SREG__
+ 1214 0964 0F92      		push r0
+ 1215 0966 0BB6      		in r0,91-32
+ 1216 0968 0F92      		push r0
+ 1217 096a 1124      		clr __zero_reg__
+ 1218 096c 2F93      		push r18
+ 1219 096e 3F93      		push r19
+ 1220 0970 4F93      		push r20
+ 1221 0972 5F93      		push r21
+ 1222 0974 6F93      		push r22
+ 1223 0976 7F93      		push r23
+ 1224 0978 8F93      		push r24
+ 1225 097a 9F93      		push r25
+ 1226 097c AF93      		push r26
+ 1227 097e BF93      		push r27
+ 1228 0980 EF93      		push r30
+ 1229 0982 FF93      		push r31
+ 1230               	/* prologue: Signal */
+ 1231               	/* frame size = 0 */
+ 1232 0984 8091 0000 		lds r24,task
+ 1233 0988 9091 0000 		lds r25,(task)+1
+ 1234 098c 892B      		or r24,r25
+ 1235 098e 01F0      		breq .L156
+ 1236 0990 E091 0000 		lds r30,choice_temp_grp
+ 1237 0994 F091 0000 		lds r31,(choice_temp_grp)+1
+ 1238 0998 1382      		std Z+3,__zero_reg__
+ 1239 099a 8091 0000 		lds r24,choice_temp
+ 1240 099e 9091 0000 		lds r25,(choice_temp)+1
+ 1241 09a2 892B      		or r24,r25
+ 1242 09a4 01F4      		brne .+2
+ 1243 09a6 00C0      		rjmp .L157
+ 1244 09a8 1092 0000 		sts (choice_temp)+1,__zero_reg__
+ 1245 09ac 1092 0000 		sts choice_temp,__zero_reg__
+ 1246 09b0 CF01      		movw r24,r30
+ 1247 09b2 61E0      		ldi r22,lo8(1)
+ 1248 09b4 41E0      		ldi r20,lo8(1)
+ 1249 09b6 20E0      		ldi r18,lo8(err)
+ 1250 09b8 30E0      		ldi r19,hi8(err)
+ 1251 09ba 0E94 0000 		call OSFlagPost
+ 1252 09be 2CEB      		ldi r18,lo8(700)
+ 1253 09c0 32E0      		ldi r19,hi8(700)
+ 1254 09c2 00C0      		rjmp .L158
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 23
+
+
+ 1255               	.L156:
+ 1256 09c4 8091 0000 		lds r24,song
+ 1257 09c8 9091 0000 		lds r25,(song)+1
+ 1258 09cc 0196      		adiw r24,1
+ 1259 09ce 9093 0000 		sts (song)+1,r25
+ 1260 09d2 8093 0000 		sts song,r24
+ 1261 09d6 8091 0000 		lds r24,song
+ 1262 09da 9091 0000 		lds r25,(song)+1
+ 1263 09de 63E0      		ldi r22,lo8(3)
+ 1264 09e0 70E0      		ldi r23,hi8(3)
+ 1265 09e2 0E94 0000 		call __divmodhi4
+ 1266 09e6 9093 0000 		sts (song)+1,r25
+ 1267 09ea 8093 0000 		sts song,r24
+ 1268 09ee 1092 0000 		sts (pointer)+1,__zero_reg__
+ 1269 09f2 1092 0000 		sts pointer,__zero_reg__
+ 1270 09f6 2CEB      		ldi r18,lo8(700)
+ 1271 09f8 32E0      		ldi r19,hi8(700)
+ 1272               	.L158:
+ 1273 09fa 40E9      		ldi r20,lo8(400)
+ 1274 09fc 51E0      		ldi r21,hi8(400)
+ 1275               	.L160:
+ 1276 09fe CA01      		movw r24,r20
+ 1277               	/* #APP */
+ 1278               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1279 0a00 0197      		1: sbiw r24,1
+ 1280 0a02 01F4      		brne 1b
+ 1281               	 ;  0 "" 2
+ 1282               	/* #NOAPP */
+ 1283 0a04 2150      		subi r18,lo8(-(-1))
+ 1284 0a06 3040      		sbci r19,hi8(-(-1))
+ 1285 0a08 01F4      		brne .L160
+ 1286               	/* epilogue start */
+ 1287 0a0a FF91      		pop r31
+ 1288 0a0c EF91      		pop r30
+ 1289 0a0e BF91      		pop r27
+ 1290 0a10 AF91      		pop r26
+ 1291 0a12 9F91      		pop r25
+ 1292 0a14 8F91      		pop r24
+ 1293 0a16 7F91      		pop r23
+ 1294 0a18 6F91      		pop r22
+ 1295 0a1a 5F91      		pop r21
+ 1296 0a1c 4F91      		pop r20
+ 1297 0a1e 3F91      		pop r19
+ 1298 0a20 2F91      		pop r18
+ 1299 0a22 0F90      		pop r0
+ 1300 0a24 0BBE      		out 91-32,r0
+ 1301 0a26 0F90      		pop r0
+ 1302 0a28 0FBE      		out __SREG__,r0
+ 1303 0a2a 0F90      		pop r0
+ 1304 0a2c 1F90      		pop __zero_reg__
+ 1305 0a2e 1895      		reti
+ 1306               	.L157:
+ 1307 0a30 81E0      		ldi r24,lo8(1)
+ 1308 0a32 90E0      		ldi r25,hi8(1)
+ 1309 0a34 9093 0000 		sts (choice_temp)+1,r25
+ 1310 0a38 8093 0000 		sts choice_temp,r24
+ 1311 0a3c CF01      		movw r24,r30
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 24
+
+
+ 1312 0a3e 62E0      		ldi r22,lo8(2)
+ 1313 0a40 41E0      		ldi r20,lo8(1)
+ 1314 0a42 20E0      		ldi r18,lo8(err)
+ 1315 0a44 30E0      		ldi r19,hi8(err)
+ 1316 0a46 0E94 0000 		call OSFlagPost
+ 1317 0a4a 2CEB      		ldi r18,lo8(700)
+ 1318 0a4c 32E0      		ldi r19,hi8(700)
+ 1319 0a4e 00C0      		rjmp .L158
+ 1320               		.size	__vector_5, .-__vector_5
+ 1321               	.global	__vector_6
+ 1322               		.type	__vector_6, @function
+ 1323               	__vector_6:
+ 1324 0a50 1F92      		push __zero_reg__
+ 1325 0a52 0F92      		push r0
+ 1326 0a54 0FB6      		in r0,__SREG__
+ 1327 0a56 0F92      		push r0
+ 1328 0a58 0BB6      		in r0,91-32
+ 1329 0a5a 0F92      		push r0
+ 1330 0a5c 1124      		clr __zero_reg__
+ 1331 0a5e 2F93      		push r18
+ 1332 0a60 3F93      		push r19
+ 1333 0a62 4F93      		push r20
+ 1334 0a64 5F93      		push r21
+ 1335 0a66 6F93      		push r22
+ 1336 0a68 7F93      		push r23
+ 1337 0a6a 8F93      		push r24
+ 1338 0a6c 9F93      		push r25
+ 1339 0a6e AF93      		push r26
+ 1340 0a70 BF93      		push r27
+ 1341 0a72 EF93      		push r30
+ 1342 0a74 FF93      		push r31
+ 1343               	/* prologue: Signal */
+ 1344               	/* frame size = 0 */
+ 1345 0a76 E091 0000 		lds r30,choice_task
+ 1346 0a7a F091 0000 		lds r31,(choice_task)+1
+ 1347 0a7e 1382      		std Z+3,__zero_reg__
+ 1348 0a80 8091 0000 		lds r24,task
+ 1349 0a84 9091 0000 		lds r25,(task)+1
+ 1350 0a88 892B      		or r24,r25
+ 1351 0a8a 01F0      		breq .L163
+ 1352 0a8c 1092 0000 		sts (task)+1,__zero_reg__
+ 1353 0a90 1092 0000 		sts task,__zero_reg__
+ 1354 0a94 87B7      		in r24,87-32
+ 1355 0a96 8064      		ori r24,lo8(64)
+ 1356 0a98 87BF      		out 87-32,r24
+ 1357 0a9a CF01      		movw r24,r30
+ 1358 0a9c 61E0      		ldi r22,lo8(1)
+ 1359 0a9e 41E0      		ldi r20,lo8(1)
+ 1360 0aa0 20E0      		ldi r18,lo8(err)
+ 1361 0aa2 30E0      		ldi r19,hi8(err)
+ 1362 0aa4 0E94 0000 		call OSFlagPost
+ 1363 0aa8 2CEB      		ldi r18,lo8(700)
+ 1364 0aaa 32E0      		ldi r19,hi8(700)
+ 1365               	.L164:
+ 1366 0aac 40E9      		ldi r20,lo8(400)
+ 1367 0aae 51E0      		ldi r21,hi8(400)
+ 1368               	.L166:
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 25
+
+
+ 1369 0ab0 CA01      		movw r24,r20
+ 1370               	/* #APP */
+ 1371               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1372 0ab2 0197      		1: sbiw r24,1
+ 1373 0ab4 01F4      		brne 1b
+ 1374               	 ;  0 "" 2
+ 1375               	/* #NOAPP */
+ 1376 0ab6 2150      		subi r18,lo8(-(-1))
+ 1377 0ab8 3040      		sbci r19,hi8(-(-1))
+ 1378 0aba 01F4      		brne .L166
+ 1379               	/* epilogue start */
+ 1380 0abc FF91      		pop r31
+ 1381 0abe EF91      		pop r30
+ 1382 0ac0 BF91      		pop r27
+ 1383 0ac2 AF91      		pop r26
+ 1384 0ac4 9F91      		pop r25
+ 1385 0ac6 8F91      		pop r24
+ 1386 0ac8 7F91      		pop r23
+ 1387 0aca 6F91      		pop r22
+ 1388 0acc 5F91      		pop r21
+ 1389 0ace 4F91      		pop r20
+ 1390 0ad0 3F91      		pop r19
+ 1391 0ad2 2F91      		pop r18
+ 1392 0ad4 0F90      		pop r0
+ 1393 0ad6 0BBE      		out 91-32,r0
+ 1394 0ad8 0F90      		pop r0
+ 1395 0ada 0FBE      		out __SREG__,r0
+ 1396 0adc 0F90      		pop r0
+ 1397 0ade 1F90      		pop __zero_reg__
+ 1398 0ae0 1895      		reti
+ 1399               	.L163:
+ 1400 0ae2 81E0      		ldi r24,lo8(1)
+ 1401 0ae4 90E0      		ldi r25,hi8(1)
+ 1402 0ae6 9093 0000 		sts (task)+1,r25
+ 1403 0aea 8093 0000 		sts task,r24
+ 1404 0aee 1BBA      		out 59-32,__zero_reg__
+ 1405 0af0 87B7      		in r24,87-32
+ 1406 0af2 8F7B      		andi r24,lo8(-65)
+ 1407 0af4 87BF      		out 87-32,r24
+ 1408 0af6 CF01      		movw r24,r30
+ 1409 0af8 62E0      		ldi r22,lo8(2)
+ 1410 0afa 41E0      		ldi r20,lo8(1)
+ 1411 0afc 20E0      		ldi r18,lo8(err)
+ 1412 0afe 30E0      		ldi r19,hi8(err)
+ 1413 0b00 0E94 0000 		call OSFlagPost
+ 1414 0b04 2CEB      		ldi r18,lo8(700)
+ 1415 0b06 32E0      		ldi r19,hi8(700)
+ 1416 0b08 00C0      		rjmp .L164
+ 1417               		.size	__vector_6, .-__vector_6
+ 1418               	.global	main
+ 1419               		.type	main, @function
+ 1420               	main:
+ 1421 0b0a 0F93      		push r16
+ 1422 0b0c 1F93      		push r17
+ 1423               	/* prologue: function */
+ 1424               	/* frame size = 0 */
+ 1425 0b0e 0E94 0000 		call OSInit
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 26
+
+
+ 1426               	/* #APP */
+ 1427               	 ;  215 "project.c" 1
+ 1428 0b12 F894      		cli
+ 1429               	 ;  0 "" 2
+ 1430               	/* #NOAPP */
+ 1431 0b14 1092 0000 		sts (task)+1,__zero_reg__
+ 1432 0b18 1092 0000 		sts task,__zero_reg__
+ 1433 0b1c 1092 0000 		sts (song)+1,__zero_reg__
+ 1434 0b20 1092 0000 		sts song,__zero_reg__
+ 1435 0b24 1092 0000 		sts (pointer)+1,__zero_reg__
+ 1436 0b28 1092 0000 		sts pointer,__zero_reg__
+ 1437 0b2c 1092 0000 		sts (light)+1,__zero_reg__
+ 1438 0b30 1092 0000 		sts light,__zero_reg__
+ 1439 0b34 1092 0000 		sts (choice_temp)+1,__zero_reg__
+ 1440 0b38 1092 0000 		sts choice_temp,__zero_reg__
+ 1441 0b3c 87E0      		ldi r24,lo8(7)
+ 1442 0b3e 83BF      		out 83-32,r24
+ 1443 0b40 81E4      		ldi r24,lo8(65)
+ 1444 0b42 87BF      		out 87-32,r24
+ 1445 0b44 84E6      		ldi r24,lo8(100)
+ 1446 0b46 82BF      		out 82-32,r24
+ 1447 0b48 8AB3      		in r24,58-32
+ 1448 0b4a 8FEF      		ldi r24,lo8(-1)
+ 1449 0b4c 8ABB      		out 58-32,r24
+ 1450 0b4e 8FEC      		ldi r24,lo8(-49)
+ 1451 0b50 82B9      		out 34-32,r24
+ 1452 0b52 8AE0      		ldi r24,lo8(10)
+ 1453 0b54 8ABF      		out 90-32,r24
+ 1454 0b56 80E3      		ldi r24,lo8(48)
+ 1455 0b58 89BF      		out 89-32,r24
+ 1456 0b5a 17B8      		out 39-32,__zero_reg__
+ 1457 0b5c 87E8      		ldi r24,lo8(-121)
+ 1458 0b5e 86B9      		out 38-32,r24
+ 1459 0b60 0E94 0000 		call InitI2C
+ 1460               	/* #APP */
+ 1461               	 ;  231 "project.c" 1
+ 1462 0b64 7894      		sei
+ 1463               	 ;  0 "" 2
+ 1464               	 ;  233 "project.c" 1
+ 1465 0b66 7894      		sei
+ 1466               	 ;  0 "" 2
+ 1467               	/* #NOAPP */
+ 1468 0b68 00E0      		ldi r16,lo8(err)
+ 1469 0b6a 10E0      		ldi r17,hi8(err)
+ 1470 0b6c 80E0      		ldi r24,lo8(0)
+ 1471 0b6e B801      		movw r22,r16
+ 1472 0b70 0E94 0000 		call OSFlagCreate
+ 1473 0b74 9093 0000 		sts (enable_temp)+1,r25
+ 1474 0b78 8093 0000 		sts enable_temp,r24
+ 1475 0b7c 81E0      		ldi r24,lo8(1)
+ 1476 0b7e B801      		movw r22,r16
+ 1477 0b80 0E94 0000 		call OSFlagCreate
+ 1478 0b84 9093 0000 		sts (choice_temp_grp)+1,r25
+ 1479 0b88 8093 0000 		sts choice_temp_grp,r24
+ 1480 0b8c 80E0      		ldi r24,lo8(0)
+ 1481 0b8e B801      		movw r22,r16
+ 1482 0b90 0E94 0000 		call OSFlagCreate
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 27
+
+
+ 1483 0b94 9093 0000 		sts (choice_speed_grp)+1,r25
+ 1484 0b98 8093 0000 		sts choice_speed_grp,r24
+ 1485 0b9c 81E0      		ldi r24,lo8(1)
+ 1486 0b9e B801      		movw r22,r16
+ 1487 0ba0 0E94 0000 		call OSFlagCreate
+ 1488 0ba4 9093 0000 		sts (choice_task)+1,r25
+ 1489 0ba8 8093 0000 		sts choice_task,r24
+ 1490 0bac 80E0      		ldi r24,lo8(0)
+ 1491 0bae 90E0      		ldi r25,hi8(0)
+ 1492 0bb0 0E94 0000 		call OSMboxCreate
+ 1493 0bb4 9093 0000 		sts (mbox_tone)+1,r25
+ 1494 0bb8 8093 0000 		sts mbox_tone,r24
+ 1495 0bbc 80E0      		ldi r24,lo8(gs(readLightTask))
+ 1496 0bbe 90E0      		ldi r25,hi8(gs(readLightTask))
+ 1497 0bc0 60E0      		ldi r22,lo8(0)
+ 1498 0bc2 70E0      		ldi r23,hi8(0)
+ 1499 0bc4 40E0      		ldi r20,lo8(TaskStk+127)
+ 1500 0bc6 50E0      		ldi r21,hi8(TaskStk+127)
+ 1501 0bc8 20E0      		ldi r18,lo8(0)
+ 1502 0bca 0E94 0000 		call OSTaskCreate
+ 1503 0bce 80E0      		ldi r24,lo8(gs(showSpeedTask))
+ 1504 0bd0 90E0      		ldi r25,hi8(gs(showSpeedTask))
+ 1505 0bd2 60E0      		ldi r22,lo8(0)
+ 1506 0bd4 70E0      		ldi r23,hi8(0)
+ 1507 0bd6 40E0      		ldi r20,lo8(TaskStk+255)
+ 1508 0bd8 50E0      		ldi r21,hi8(TaskStk+255)
+ 1509 0bda 21E0      		ldi r18,lo8(1)
+ 1510 0bdc 0E94 0000 		call OSTaskCreate
+ 1511 0be0 80E0      		ldi r24,lo8(gs(showToneLEDTask))
+ 1512 0be2 90E0      		ldi r25,hi8(gs(showToneLEDTask))
+ 1513 0be4 60E0      		ldi r22,lo8(0)
+ 1514 0be6 70E0      		ldi r23,hi8(0)
+ 1515 0be8 40E0      		ldi r20,lo8(TaskStk+383)
+ 1516 0bea 50E0      		ldi r21,hi8(TaskStk+383)
+ 1517 0bec 22E0      		ldi r18,lo8(2)
+ 1518 0bee 0E94 0000 		call OSTaskCreate
+ 1519 0bf2 80E0      		ldi r24,lo8(gs(PlaySongTask))
+ 1520 0bf4 90E0      		ldi r25,hi8(gs(PlaySongTask))
+ 1521 0bf6 60E0      		ldi r22,lo8(0)
+ 1522 0bf8 70E0      		ldi r23,hi8(0)
+ 1523 0bfa 40E0      		ldi r20,lo8(TaskStk+511)
+ 1524 0bfc 50E0      		ldi r21,hi8(TaskStk+511)
+ 1525 0bfe 23E0      		ldi r18,lo8(3)
+ 1526 0c00 0E94 0000 		call OSTaskCreate
+ 1527 0c04 80E0      		ldi r24,lo8(gs(TemperatureTask))
+ 1528 0c06 90E0      		ldi r25,hi8(gs(TemperatureTask))
+ 1529 0c08 60E0      		ldi r22,lo8(0)
+ 1530 0c0a 70E0      		ldi r23,hi8(0)
+ 1531 0c0c 40E0      		ldi r20,lo8(TaskStk+639)
+ 1532 0c0e 50E0      		ldi r21,hi8(TaskStk+639)
+ 1533 0c10 24E0      		ldi r18,lo8(4)
+ 1534 0c12 0E94 0000 		call OSTaskCreate
+ 1535 0c16 80E0      		ldi r24,lo8(gs(showTempLEDTask))
+ 1536 0c18 90E0      		ldi r25,hi8(gs(showTempLEDTask))
+ 1537 0c1a 60E0      		ldi r22,lo8(0)
+ 1538 0c1c 70E0      		ldi r23,hi8(0)
+ 1539 0c1e 40E0      		ldi r20,lo8(TaskStk+767)
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 28
+
+
+ 1540 0c20 50E0      		ldi r21,hi8(TaskStk+767)
+ 1541 0c22 25E0      		ldi r18,lo8(5)
+ 1542 0c24 0E94 0000 		call OSTaskCreate
+ 1543 0c28 80E0      		ldi r24,lo8(gs(showTempTask))
+ 1544 0c2a 90E0      		ldi r25,hi8(gs(showTempTask))
+ 1545 0c2c 60E0      		ldi r22,lo8(0)
+ 1546 0c2e 70E0      		ldi r23,hi8(0)
+ 1547 0c30 40E0      		ldi r20,lo8(TaskStk+895)
+ 1548 0c32 50E0      		ldi r21,hi8(TaskStk+895)
+ 1549 0c34 26E0      		ldi r18,lo8(6)
+ 1550 0c36 0E94 0000 		call OSTaskCreate
+ 1551 0c3a 80E0      		ldi r24,lo8(gs(showWarmOrColdTask))
+ 1552 0c3c 90E0      		ldi r25,hi8(gs(showWarmOrColdTask))
+ 1553 0c3e 60E0      		ldi r22,lo8(0)
+ 1554 0c40 70E0      		ldi r23,hi8(0)
+ 1555 0c42 40E0      		ldi r20,lo8(TaskStk+1023)
+ 1556 0c44 50E0      		ldi r21,hi8(TaskStk+1023)
+ 1557 0c46 27E0      		ldi r18,lo8(7)
+ 1558 0c48 0E94 0000 		call OSTaskCreate
+ 1559 0c4c 0E94 0000 		call OSStart
+ 1560 0c50 80E0      		ldi r24,lo8(0)
+ 1561 0c52 90E0      		ldi r25,hi8(0)
+ 1562               	/* epilogue start */
+ 1563 0c54 1F91      		pop r17
+ 1564 0c56 0F91      		pop r16
+ 1565 0c58 0895      		ret
+ 1566               		.size	main, .-main
+ 1567               	.global	digit
+ 1568               		.data
+ 1569               		.type	digit, @object
+ 1570               		.size	digit, 10
+ 1571               	digit:
+ 1572 0000 3F        		.byte	63
+ 1573 0001 06        		.byte	6
+ 1574 0002 5B        		.byte	91
+ 1575 0003 4F        		.byte	79
+ 1576 0004 66        		.byte	102
+ 1577 0005 6D        		.byte	109
+ 1578 0006 7C        		.byte	124
+ 1579 0007 07        		.byte	7
+ 1580 0008 7F        		.byte	127
+ 1581 0009 67        		.byte	103
+ 1582               	.global	fnd_sel
+ 1583               		.type	fnd_sel, @object
+ 1584               		.size	fnd_sel, 4
+ 1585               	fnd_sel:
+ 1586 000a 01        		.byte	1
+ 1587 000b 02        		.byte	2
+ 1588 000c 04        		.byte	4
+ 1589 000d 08        		.byte	8
+ 1590               	.global	jinglebel
+ 1591               		.type	jinglebel, @object
+ 1592               		.size	jinglebel, 210
+ 1593               	jinglebel:
+ 1594 000e 1100      		.word	17
+ 1595 0010 7200      		.word	114
+ 1596 0012 6100      		.word	97
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 29
+
+
+ 1597 0014 4D00      		.word	77
+ 1598 0016 1100      		.word	17
+ 1599 0018 FEFF      		.word	-2
+ 1600 001a 1100      		.word	17
+ 1601 001c 7200      		.word	114
+ 1602 001e 6100      		.word	97
+ 1603 0020 4D00      		.word	77
+ 1604 0022 2B00      		.word	43
+ 1605 0024 FEFF      		.word	-2
+ 1606 0026 2B00      		.word	43
+ 1607 0028 7A00      		.word	122
+ 1608 002a 7200      		.word	114
+ 1609 002c 6100      		.word	97
+ 1610 002e 4200      		.word	66
+ 1611 0030 FEFF      		.word	-2
+ 1612 0032 8900      		.word	137
+ 1613 0034 8900      		.word	137
+ 1614 0036 7A00      		.word	122
+ 1615 0038 6100      		.word	97
+ 1616 003a 7200      		.word	114
+ 1617 003c 4D00      		.word	77
+ 1618 003e FEFF      		.word	-2
+ 1619 0040 1100      		.word	17
+ 1620 0042 7200      		.word	114
+ 1621 0044 6100      		.word	97
+ 1622 0046 4D00      		.word	77
+ 1623 0048 1100      		.word	17
+ 1624 004a FEFF      		.word	-2
+ 1625 004c 1100      		.word	17
+ 1626 004e 7200      		.word	114
+ 1627 0050 6100      		.word	97
+ 1628 0052 4D00      		.word	77
+ 1629 0054 2B00      		.word	43
+ 1630 0056 FEFF      		.word	-2
+ 1631 0058 2B00      		.word	43
+ 1632 005a 7A00      		.word	122
+ 1633 005c 7200      		.word	114
+ 1634 005e 6100      		.word	97
+ 1635 0060 8900      		.word	137
+ 1636 0062 8900      		.word	137
+ 1637 0064 8900      		.word	137
+ 1638 0066 8900      		.word	137
+ 1639 0068 9500      		.word	149
+ 1640 006a 8900      		.word	137
+ 1641 006c 7A00      		.word	122
+ 1642 006e 6100      		.word	97
+ 1643 0070 4D00      		.word	77
+ 1644 0072 FEFF      		.word	-2
+ 1645 0074 7200      		.word	114
+ 1646 0076 7200      		.word	114
+ 1647 0078 7200      		.word	114
+ 1648 007a 7200      		.word	114
+ 1649 007c 7200      		.word	114
+ 1650 007e 7200      		.word	114
+ 1651 0080 7200      		.word	114
+ 1652 0082 8900      		.word	137
+ 1653 0084 4D00      		.word	77
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 30
+
+
+ 1654 0086 6100      		.word	97
+ 1655 0088 7200      		.word	114
+ 1656 008a FEFF      		.word	-2
+ 1657 008c 7A00      		.word	122
+ 1658 008e 7A00      		.word	122
+ 1659 0090 7A00      		.word	122
+ 1660 0092 7A00      		.word	122
+ 1661 0094 7A00      		.word	122
+ 1662 0096 7200      		.word	114
+ 1663 0098 7200      		.word	114
+ 1664 009a 7200      		.word	114
+ 1665 009c 7200      		.word	114
+ 1666 009e 6100      		.word	97
+ 1667 00a0 6100      		.word	97
+ 1668 00a2 4D00      		.word	77
+ 1669 00a4 6100      		.word	97
+ 1670 00a6 8900      		.word	137
+ 1671 00a8 FEFF      		.word	-2
+ 1672 00aa 7200      		.word	114
+ 1673 00ac 7200      		.word	114
+ 1674 00ae 7200      		.word	114
+ 1675 00b0 7200      		.word	114
+ 1676 00b2 7200      		.word	114
+ 1677 00b4 7200      		.word	114
+ 1678 00b6 7200      		.word	114
+ 1679 00b8 8900      		.word	137
+ 1680 00ba 4D00      		.word	77
+ 1681 00bc 6100      		.word	97
+ 1682 00be 7200      		.word	114
+ 1683 00c0 FEFF      		.word	-2
+ 1684 00c2 7A00      		.word	122
+ 1685 00c4 7A00      		.word	122
+ 1686 00c6 7A00      		.word	122
+ 1687 00c8 7A00      		.word	122
+ 1688 00ca 7A00      		.word	122
+ 1689 00cc 7200      		.word	114
+ 1690 00ce 7200      		.word	114
+ 1691 00d0 7200      		.word	114
+ 1692 00d2 1100      		.word	17
+ 1693 00d4 1100      		.word	17
+ 1694 00d6 7A00      		.word	122
+ 1695 00d8 6100      		.word	97
+ 1696 00da 4D00      		.word	77
+ 1697 00dc FEFF      		.word	-2
+ 1698 00de FFFF      		.word	-1
+ 1699               	.global	tempo_jinglebel
+ 1700               		.type	tempo_jinglebel, @object
+ 1701               		.size	tempo_jinglebel, 420
+ 1702               	tempo_jinglebel:
+ 1703 00e0 00        		.byte	0
+ 1704 00e1 00        		.byte	0
+ 1705 00e2 7A        		.byte	122
+ 1706 00e3 43        		.byte	67
+ 1707 00e4 00        		.byte	0
+ 1708 00e5 00        		.byte	0
+ 1709 00e6 7A        		.byte	122
+ 1710 00e7 43        		.byte	67
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 31
+
+
+ 1711 00e8 00        		.byte	0
+ 1712 00e9 00        		.byte	0
+ 1713 00ea 7A        		.byte	122
+ 1714 00eb 43        		.byte	67
+ 1715 00ec 00        		.byte	0
+ 1716 00ed 00        		.byte	0
+ 1717 00ee 7A        		.byte	122
+ 1718 00ef 43        		.byte	67
+ 1719 00f0 00        		.byte	0
+ 1720 00f1 80        		.byte	-128
+ 1721 00f2 3B        		.byte	59
+ 1722 00f3 44        		.byte	68
+ 1723 00f4 00        		.byte	0
+ 1724 00f5 00        		.byte	0
+ 1725 00f6 7A        		.byte	122
+ 1726 00f7 43        		.byte	67
+ 1727 00f8 00        		.byte	0
+ 1728 00f9 00        		.byte	0
+ 1729 00fa 7A        		.byte	122
+ 1730 00fb 43        		.byte	67
+ 1731 00fc 00        		.byte	0
+ 1732 00fd 00        		.byte	0
+ 1733 00fe 7A        		.byte	122
+ 1734 00ff 43        		.byte	67
+ 1735 0100 00        		.byte	0
+ 1736 0101 00        		.byte	0
+ 1737 0102 7A        		.byte	122
+ 1738 0103 43        		.byte	67
+ 1739 0104 00        		.byte	0
+ 1740 0105 00        		.byte	0
+ 1741 0106 7A        		.byte	122
+ 1742 0107 43        		.byte	67
+ 1743 0108 00        		.byte	0
+ 1744 0109 80        		.byte	-128
+ 1745 010a 3B        		.byte	59
+ 1746 010b 44        		.byte	68
+ 1747 010c 00        		.byte	0
+ 1748 010d 00        		.byte	0
+ 1749 010e 7A        		.byte	122
+ 1750 010f 43        		.byte	67
+ 1751 0110 00        		.byte	0
+ 1752 0111 00        		.byte	0
+ 1753 0112 7A        		.byte	122
+ 1754 0113 43        		.byte	67
+ 1755 0114 00        		.byte	0
+ 1756 0115 00        		.byte	0
+ 1757 0116 7A        		.byte	122
+ 1758 0117 43        		.byte	67
+ 1759 0118 00        		.byte	0
+ 1760 0119 00        		.byte	0
+ 1761 011a 7A        		.byte	122
+ 1762 011b 43        		.byte	67
+ 1763 011c 00        		.byte	0
+ 1764 011d 00        		.byte	0
+ 1765 011e 7A        		.byte	122
+ 1766 011f 43        		.byte	67
+ 1767 0120 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 32
+
+
+ 1768 0121 80        		.byte	-128
+ 1769 0122 3B        		.byte	59
+ 1770 0123 44        		.byte	68
+ 1771 0124 00        		.byte	0
+ 1772 0125 00        		.byte	0
+ 1773 0126 7A        		.byte	122
+ 1774 0127 43        		.byte	67
+ 1775 0128 00        		.byte	0
+ 1776 0129 00        		.byte	0
+ 1777 012a 7A        		.byte	122
+ 1778 012b 43        		.byte	67
+ 1779 012c 00        		.byte	0
+ 1780 012d 00        		.byte	0
+ 1781 012e 7A        		.byte	122
+ 1782 012f 43        		.byte	67
+ 1783 0130 00        		.byte	0
+ 1784 0131 00        		.byte	0
+ 1785 0132 7A        		.byte	122
+ 1786 0133 43        		.byte	67
+ 1787 0134 00        		.byte	0
+ 1788 0135 00        		.byte	0
+ 1789 0136 7A        		.byte	122
+ 1790 0137 43        		.byte	67
+ 1791 0138 00        		.byte	0
+ 1792 0139 00        		.byte	0
+ 1793 013a FA        		.byte	-6
+ 1794 013b 43        		.byte	67
+ 1795 013c 00        		.byte	0
+ 1796 013d 00        		.byte	0
+ 1797 013e 7A        		.byte	122
+ 1798 013f 43        		.byte	67
+ 1799 0140 00        		.byte	0
+ 1800 0141 00        		.byte	0
+ 1801 0142 7A        		.byte	122
+ 1802 0143 43        		.byte	67
+ 1803 0144 00        		.byte	0
+ 1804 0145 00        		.byte	0
+ 1805 0146 7A        		.byte	122
+ 1806 0147 43        		.byte	67
+ 1807 0148 00        		.byte	0
+ 1808 0149 00        		.byte	0
+ 1809 014a 7A        		.byte	122
+ 1810 014b 43        		.byte	67
+ 1811 014c 00        		.byte	0
+ 1812 014d 00        		.byte	0
+ 1813 014e 7A        		.byte	122
+ 1814 014f 43        		.byte	67
+ 1815 0150 00        		.byte	0
+ 1816 0151 00        		.byte	0
+ 1817 0152 7A        		.byte	122
+ 1818 0153 43        		.byte	67
+ 1819 0154 00        		.byte	0
+ 1820 0155 80        		.byte	-128
+ 1821 0156 3B        		.byte	59
+ 1822 0157 44        		.byte	68
+ 1823 0158 00        		.byte	0
+ 1824 0159 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 33
+
+
+ 1825 015a 7A        		.byte	122
+ 1826 015b 43        		.byte	67
+ 1827 015c 00        		.byte	0
+ 1828 015d 00        		.byte	0
+ 1829 015e 7A        		.byte	122
+ 1830 015f 43        		.byte	67
+ 1831 0160 00        		.byte	0
+ 1832 0161 00        		.byte	0
+ 1833 0162 7A        		.byte	122
+ 1834 0163 43        		.byte	67
+ 1835 0164 00        		.byte	0
+ 1836 0165 00        		.byte	0
+ 1837 0166 7A        		.byte	122
+ 1838 0167 43        		.byte	67
+ 1839 0168 00        		.byte	0
+ 1840 0169 00        		.byte	0
+ 1841 016a 7A        		.byte	122
+ 1842 016b 43        		.byte	67
+ 1843 016c 00        		.byte	0
+ 1844 016d 80        		.byte	-128
+ 1845 016e 3B        		.byte	59
+ 1846 016f 44        		.byte	68
+ 1847 0170 00        		.byte	0
+ 1848 0171 00        		.byte	0
+ 1849 0172 7A        		.byte	122
+ 1850 0173 43        		.byte	67
+ 1851 0174 00        		.byte	0
+ 1852 0175 00        		.byte	0
+ 1853 0176 7A        		.byte	122
+ 1854 0177 43        		.byte	67
+ 1855 0178 00        		.byte	0
+ 1856 0179 00        		.byte	0
+ 1857 017a 7A        		.byte	122
+ 1858 017b 43        		.byte	67
+ 1859 017c 00        		.byte	0
+ 1860 017d 00        		.byte	0
+ 1861 017e 7A        		.byte	122
+ 1862 017f 43        		.byte	67
+ 1863 0180 00        		.byte	0
+ 1864 0181 00        		.byte	0
+ 1865 0182 7A        		.byte	122
+ 1866 0183 43        		.byte	67
+ 1867 0184 00        		.byte	0
+ 1868 0185 80        		.byte	-128
+ 1869 0186 BB        		.byte	-69
+ 1870 0187 43        		.byte	67
+ 1871 0188 00        		.byte	0
+ 1872 0189 00        		.byte	0
+ 1873 018a FA        		.byte	-6
+ 1874 018b 42        		.byte	66
+ 1875 018c 00        		.byte	0
+ 1876 018d 00        		.byte	0
+ 1877 018e 7A        		.byte	122
+ 1878 018f 43        		.byte	67
+ 1879 0190 00        		.byte	0
+ 1880 0191 00        		.byte	0
+ 1881 0192 7A        		.byte	122
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 34
+
+
+ 1882 0193 43        		.byte	67
+ 1883 0194 00        		.byte	0
+ 1884 0195 00        		.byte	0
+ 1885 0196 7A        		.byte	122
+ 1886 0197 43        		.byte	67
+ 1887 0198 00        		.byte	0
+ 1888 0199 00        		.byte	0
+ 1889 019a 7A        		.byte	122
+ 1890 019b 43        		.byte	67
+ 1891 019c 00        		.byte	0
+ 1892 019d 00        		.byte	0
+ 1893 019e 7A        		.byte	122
+ 1894 019f 43        		.byte	67
+ 1895 01a0 00        		.byte	0
+ 1896 01a1 00        		.byte	0
+ 1897 01a2 7A        		.byte	122
+ 1898 01a3 43        		.byte	67
+ 1899 01a4 00        		.byte	0
+ 1900 01a5 80        		.byte	-128
+ 1901 01a6 3B        		.byte	59
+ 1902 01a7 44        		.byte	68
+ 1903 01a8 00        		.byte	0
+ 1904 01a9 00        		.byte	0
+ 1905 01aa 7A        		.byte	122
+ 1906 01ab 43        		.byte	67
+ 1907 01ac 00        		.byte	0
+ 1908 01ad 00        		.byte	0
+ 1909 01ae 7A        		.byte	122
+ 1910 01af 43        		.byte	67
+ 1911 01b0 00        		.byte	0
+ 1912 01b1 00        		.byte	0
+ 1913 01b2 7A        		.byte	122
+ 1914 01b3 43        		.byte	67
+ 1915 01b4 00        		.byte	0
+ 1916 01b5 00        		.byte	0
+ 1917 01b6 FA        		.byte	-6
+ 1918 01b7 43        		.byte	67
+ 1919 01b8 00        		.byte	0
+ 1920 01b9 00        		.byte	0
+ 1921 01ba 7A        		.byte	122
+ 1922 01bb 43        		.byte	67
+ 1923 01bc 00        		.byte	0
+ 1924 01bd 00        		.byte	0
+ 1925 01be 7A        		.byte	122
+ 1926 01bf 43        		.byte	67
+ 1927 01c0 00        		.byte	0
+ 1928 01c1 00        		.byte	0
+ 1929 01c2 FA        		.byte	-6
+ 1930 01c3 43        		.byte	67
+ 1931 01c4 00        		.byte	0
+ 1932 01c5 00        		.byte	0
+ 1933 01c6 7A        		.byte	122
+ 1934 01c7 43        		.byte	67
+ 1935 01c8 00        		.byte	0
+ 1936 01c9 00        		.byte	0
+ 1937 01ca 7A        		.byte	122
+ 1938 01cb 43        		.byte	67
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 35
+
+
+ 1939 01cc 00        		.byte	0
+ 1940 01cd 00        		.byte	0
+ 1941 01ce 7A        		.byte	122
+ 1942 01cf 43        		.byte	67
+ 1943 01d0 00        		.byte	0
+ 1944 01d1 00        		.byte	0
+ 1945 01d2 FA        		.byte	-6
+ 1946 01d3 42        		.byte	66
+ 1947 01d4 00        		.byte	0
+ 1948 01d5 80        		.byte	-128
+ 1949 01d6 3B        		.byte	59
+ 1950 01d7 44        		.byte	68
+ 1951 01d8 00        		.byte	0
+ 1952 01d9 00        		.byte	0
+ 1953 01da 7A        		.byte	122
+ 1954 01db 43        		.byte	67
+ 1955 01dc 00        		.byte	0
+ 1956 01dd 00        		.byte	0
+ 1957 01de 7A        		.byte	122
+ 1958 01df 43        		.byte	67
+ 1959 01e0 00        		.byte	0
+ 1960 01e1 00        		.byte	0
+ 1961 01e2 7A        		.byte	122
+ 1962 01e3 43        		.byte	67
+ 1963 01e4 00        		.byte	0
+ 1964 01e5 80        		.byte	-128
+ 1965 01e6 BB        		.byte	-69
+ 1966 01e7 43        		.byte	67
+ 1967 01e8 00        		.byte	0
+ 1968 01e9 00        		.byte	0
+ 1969 01ea FA        		.byte	-6
+ 1970 01eb 42        		.byte	66
+ 1971 01ec 00        		.byte	0
+ 1972 01ed 00        		.byte	0
+ 1973 01ee 7A        		.byte	122
+ 1974 01ef 43        		.byte	67
+ 1975 01f0 00        		.byte	0
+ 1976 01f1 00        		.byte	0
+ 1977 01f2 7A        		.byte	122
+ 1978 01f3 43        		.byte	67
+ 1979 01f4 00        		.byte	0
+ 1980 01f5 00        		.byte	0
+ 1981 01f6 7A        		.byte	122
+ 1982 01f7 43        		.byte	67
+ 1983 01f8 00        		.byte	0
+ 1984 01f9 00        		.byte	0
+ 1985 01fa 7A        		.byte	122
+ 1986 01fb 43        		.byte	67
+ 1987 01fc 00        		.byte	0
+ 1988 01fd 00        		.byte	0
+ 1989 01fe 7A        		.byte	122
+ 1990 01ff 43        		.byte	67
+ 1991 0200 00        		.byte	0
+ 1992 0201 00        		.byte	0
+ 1993 0202 7A        		.byte	122
+ 1994 0203 43        		.byte	67
+ 1995 0204 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 36
+
+
+ 1996 0205 00        		.byte	0
+ 1997 0206 7A        		.byte	122
+ 1998 0207 43        		.byte	67
+ 1999 0208 00        		.byte	0
+ 2000 0209 00        		.byte	0
+ 2001 020a 7A        		.byte	122
+ 2002 020b 43        		.byte	67
+ 2003 020c 00        		.byte	0
+ 2004 020d 00        		.byte	0
+ 2005 020e FA        		.byte	-6
+ 2006 020f 43        		.byte	67
+ 2007 0210 00        		.byte	0
+ 2008 0211 00        		.byte	0
+ 2009 0212 7A        		.byte	122
+ 2010 0213 43        		.byte	67
+ 2011 0214 00        		.byte	0
+ 2012 0215 00        		.byte	0
+ 2013 0216 7A        		.byte	122
+ 2014 0217 43        		.byte	67
+ 2015 0218 00        		.byte	0
+ 2016 0219 00        		.byte	0
+ 2017 021a 7A        		.byte	122
+ 2018 021b 43        		.byte	67
+ 2019 021c 00        		.byte	0
+ 2020 021d 00        		.byte	0
+ 2021 021e 7A        		.byte	122
+ 2022 021f 43        		.byte	67
+ 2023 0220 00        		.byte	0
+ 2024 0221 00        		.byte	0
+ 2025 0222 FA        		.byte	-6
+ 2026 0223 43        		.byte	67
+ 2027 0224 00        		.byte	0
+ 2028 0225 00        		.byte	0
+ 2029 0226 7A        		.byte	122
+ 2030 0227 43        		.byte	67
+ 2031 0228 00        		.byte	0
+ 2032 0229 00        		.byte	0
+ 2033 022a 7A        		.byte	122
+ 2034 022b 43        		.byte	67
+ 2035 022c 00        		.byte	0
+ 2036 022d 00        		.byte	0
+ 2037 022e FA        		.byte	-6
+ 2038 022f 43        		.byte	67
+ 2039 0230 00        		.byte	0
+ 2040 0231 00        		.byte	0
+ 2041 0232 7A        		.byte	122
+ 2042 0233 43        		.byte	67
+ 2043 0234 00        		.byte	0
+ 2044 0235 00        		.byte	0
+ 2045 0236 7A        		.byte	122
+ 2046 0237 43        		.byte	67
+ 2047 0238 00        		.byte	0
+ 2048 0239 80        		.byte	-128
+ 2049 023a BB        		.byte	-69
+ 2050 023b 43        		.byte	67
+ 2051 023c 00        		.byte	0
+ 2052 023d 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 37
+
+
+ 2053 023e FA        		.byte	-6
+ 2054 023f 42        		.byte	66
+ 2055 0240 00        		.byte	0
+ 2056 0241 80        		.byte	-128
+ 2057 0242 3B        		.byte	59
+ 2058 0243 44        		.byte	68
+ 2059 0244 00        		.byte	0
+ 2060 0245 00        		.byte	0
+ 2061 0246 7A        		.byte	122
+ 2062 0247 43        		.byte	67
+ 2063 0248 00        		.byte	0
+ 2064 0249 00        		.byte	0
+ 2065 024a 7A        		.byte	122
+ 2066 024b 43        		.byte	67
+ 2067 024c 00        		.byte	0
+ 2068 024d 00        		.byte	0
+ 2069 024e 7A        		.byte	122
+ 2070 024f 43        		.byte	67
+ 2071 0250 00        		.byte	0
+ 2072 0251 80        		.byte	-128
+ 2073 0252 BB        		.byte	-69
+ 2074 0253 43        		.byte	67
+ 2075 0254 00        		.byte	0
+ 2076 0255 00        		.byte	0
+ 2077 0256 FA        		.byte	-6
+ 2078 0257 42        		.byte	66
+ 2079 0258 00        		.byte	0
+ 2080 0259 00        		.byte	0
+ 2081 025a 7A        		.byte	122
+ 2082 025b 43        		.byte	67
+ 2083 025c 00        		.byte	0
+ 2084 025d 00        		.byte	0
+ 2085 025e 7A        		.byte	122
+ 2086 025f 43        		.byte	67
+ 2087 0260 00        		.byte	0
+ 2088 0261 00        		.byte	0
+ 2089 0262 7A        		.byte	122
+ 2090 0263 43        		.byte	67
+ 2091 0264 00        		.byte	0
+ 2092 0265 00        		.byte	0
+ 2093 0266 7A        		.byte	122
+ 2094 0267 43        		.byte	67
+ 2095 0268 00        		.byte	0
+ 2096 0269 00        		.byte	0
+ 2097 026a 7A        		.byte	122
+ 2098 026b 43        		.byte	67
+ 2099 026c 00        		.byte	0
+ 2100 026d 00        		.byte	0
+ 2101 026e 7A        		.byte	122
+ 2102 026f 43        		.byte	67
+ 2103 0270 00        		.byte	0
+ 2104 0271 00        		.byte	0
+ 2105 0272 7A        		.byte	122
+ 2106 0273 43        		.byte	67
+ 2107 0274 00        		.byte	0
+ 2108 0275 00        		.byte	0
+ 2109 0276 7A        		.byte	122
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 38
+
+
+ 2110 0277 43        		.byte	67
+ 2111 0278 00        		.byte	0
+ 2112 0279 80        		.byte	-128
+ 2113 027a 3B        		.byte	59
+ 2114 027b 44        		.byte	68
+ 2115 027c 00        		.byte	0
+ 2116 027d 00        		.byte	0
+ 2117 027e 7A        		.byte	122
+ 2118 027f 43        		.byte	67
+ 2119 0280 00        		.byte	0
+ 2120 0281 00        		.byte	0
+ 2121 0282 00        		.byte	0
+ 2122 0283 00        		.byte	0
+ 2123               	.global	silent_night
+ 2124               		.type	silent_night, @object
+ 2125               		.size	silent_night, 94
+ 2126               	silent_night:
+ 2127 0284 6100      		.word	97
+ 2128 0286 7200      		.word	114
+ 2129 0288 6100      		.word	97
+ 2130 028a 4200      		.word	66
+ 2131 028c 6100      		.word	97
+ 2132 028e 7200      		.word	114
+ 2133 0290 6100      		.word	97
+ 2134 0292 4200      		.word	66
+ 2135 0294 9500      		.word	149
+ 2136 0296 9500      		.word	149
+ 2137 0298 8100      		.word	129
+ 2138 029a 8900      		.word	137
+ 2139 029c 8900      		.word	137
+ 2140 029e 6100      		.word	97
+ 2141 02a0 7200      		.word	114
+ 2142 02a2 7200      		.word	114
+ 2143 02a4 8900      		.word	137
+ 2144 02a6 8100      		.word	129
+ 2145 02a8 7200      		.word	114
+ 2146 02aa 6100      		.word	97
+ 2147 02ac 7200      		.word	114
+ 2148 02ae 6100      		.word	97
+ 2149 02b0 4200      		.word	66
+ 2150 02b2 7200      		.word	114
+ 2151 02b4 7200      		.word	114
+ 2152 02b6 8900      		.word	137
+ 2153 02b8 8100      		.word	129
+ 2154 02ba 7200      		.word	114
+ 2155 02bc 6100      		.word	97
+ 2156 02be 7200      		.word	114
+ 2157 02c0 6100      		.word	97
+ 2158 02c2 4200      		.word	66
+ 2159 02c4 9500      		.word	149
+ 2160 02c6 9500      		.word	149
+ 2161 02c8 A600      		.word	166
+ 2162 02ca 9500      		.word	149
+ 2163 02cc 8100      		.word	129
+ 2164 02ce 8900      		.word	137
+ 2165 02d0 A100      		.word	161
+ 2166 02d2 8900      		.word	137
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 39
+
+
+ 2167 02d4 6100      		.word	97
+ 2168 02d6 4200      		.word	66
+ 2169 02d8 6100      		.word	97
+ 2170 02da 4D00      		.word	77
+ 2171 02dc 2B00      		.word	43
+ 2172 02de 1100      		.word	17
+ 2173 02e0 FFFF      		.word	-1
+ 2174               	.global	tempo_silent_night
+ 2175               		.type	tempo_silent_night, @object
+ 2176               		.size	tempo_silent_night, 188
+ 2177               	tempo_silent_night:
+ 2178 02e2 00        		.byte	0
+ 2179 02e3 80        		.byte	-128
+ 2180 02e4 3B        		.byte	59
+ 2181 02e5 44        		.byte	68
+ 2182 02e6 00        		.byte	0
+ 2183 02e7 00        		.byte	0
+ 2184 02e8 7A        		.byte	122
+ 2185 02e9 43        		.byte	67
+ 2186 02ea 00        		.byte	0
+ 2187 02eb 00        		.byte	0
+ 2188 02ec FA        		.byte	-6
+ 2189 02ed 43        		.byte	67
+ 2190 02ee 00        		.byte	0
+ 2191 02ef 80        		.byte	-128
+ 2192 02f0 BB        		.byte	-69
+ 2193 02f1 44        		.byte	68
+ 2194 02f2 00        		.byte	0
+ 2195 02f3 80        		.byte	-128
+ 2196 02f4 3B        		.byte	59
+ 2197 02f5 44        		.byte	68
+ 2198 02f6 00        		.byte	0
+ 2199 02f7 00        		.byte	0
+ 2200 02f8 7A        		.byte	122
+ 2201 02f9 43        		.byte	67
+ 2202 02fa 00        		.byte	0
+ 2203 02fb 00        		.byte	0
+ 2204 02fc FA        		.byte	-6
+ 2205 02fd 43        		.byte	67
+ 2206 02fe 00        		.byte	0
+ 2207 02ff 80        		.byte	-128
+ 2208 0300 BB        		.byte	-69
+ 2209 0301 44        		.byte	68
+ 2210 0302 00        		.byte	0
+ 2211 0303 00        		.byte	0
+ 2212 0304 7A        		.byte	122
+ 2213 0305 44        		.byte	68
+ 2214 0306 00        		.byte	0
+ 2215 0307 00        		.byte	0
+ 2216 0308 FA        		.byte	-6
+ 2217 0309 43        		.byte	67
+ 2218 030a 00        		.byte	0
+ 2219 030b 80        		.byte	-128
+ 2220 030c BB        		.byte	-69
+ 2221 030d 44        		.byte	68
+ 2222 030e 00        		.byte	0
+ 2223 030f 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 40
+
+
+ 2224 0310 7A        		.byte	122
+ 2225 0311 44        		.byte	68
+ 2226 0312 00        		.byte	0
+ 2227 0313 00        		.byte	0
+ 2228 0314 FA        		.byte	-6
+ 2229 0315 43        		.byte	67
+ 2230 0316 00        		.byte	0
+ 2231 0317 80        		.byte	-128
+ 2232 0318 BB        		.byte	-69
+ 2233 0319 44        		.byte	68
+ 2234 031a 00        		.byte	0
+ 2235 031b 00        		.byte	0
+ 2236 031c 7A        		.byte	122
+ 2237 031d 44        		.byte	68
+ 2238 031e 00        		.byte	0
+ 2239 031f 00        		.byte	0
+ 2240 0320 FA        		.byte	-6
+ 2241 0321 43        		.byte	67
+ 2242 0322 00        		.byte	0
+ 2243 0323 80        		.byte	-128
+ 2244 0324 3B        		.byte	59
+ 2245 0325 44        		.byte	68
+ 2246 0326 00        		.byte	0
+ 2247 0327 00        		.byte	0
+ 2248 0328 7A        		.byte	122
+ 2249 0329 43        		.byte	67
+ 2250 032a 00        		.byte	0
+ 2251 032b 00        		.byte	0
+ 2252 032c FA        		.byte	-6
+ 2253 032d 43        		.byte	67
+ 2254 032e 00        		.byte	0
+ 2255 032f 80        		.byte	-128
+ 2256 0330 3B        		.byte	59
+ 2257 0331 44        		.byte	68
+ 2258 0332 00        		.byte	0
+ 2259 0333 00        		.byte	0
+ 2260 0334 7A        		.byte	122
+ 2261 0335 43        		.byte	67
+ 2262 0336 00        		.byte	0
+ 2263 0337 00        		.byte	0
+ 2264 0338 FA        		.byte	-6
+ 2265 0339 43        		.byte	67
+ 2266 033a 00        		.byte	0
+ 2267 033b 80        		.byte	-128
+ 2268 033c BB        		.byte	-69
+ 2269 033d 44        		.byte	68
+ 2270 033e 00        		.byte	0
+ 2271 033f 00        		.byte	0
+ 2272 0340 7A        		.byte	122
+ 2273 0341 44        		.byte	68
+ 2274 0342 00        		.byte	0
+ 2275 0343 00        		.byte	0
+ 2276 0344 FA        		.byte	-6
+ 2277 0345 43        		.byte	67
+ 2278 0346 00        		.byte	0
+ 2279 0347 80        		.byte	-128
+ 2280 0348 3B        		.byte	59
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 41
+
+
+ 2281 0349 44        		.byte	68
+ 2282 034a 00        		.byte	0
+ 2283 034b 00        		.byte	0
+ 2284 034c 7A        		.byte	122
+ 2285 034d 43        		.byte	67
+ 2286 034e 00        		.byte	0
+ 2287 034f 00        		.byte	0
+ 2288 0350 FA        		.byte	-6
+ 2289 0351 43        		.byte	67
+ 2290 0352 00        		.byte	0
+ 2291 0353 80        		.byte	-128
+ 2292 0354 3B        		.byte	59
+ 2293 0355 44        		.byte	68
+ 2294 0356 00        		.byte	0
+ 2295 0357 00        		.byte	0
+ 2296 0358 7A        		.byte	122
+ 2297 0359 43        		.byte	67
+ 2298 035a 00        		.byte	0
+ 2299 035b 00        		.byte	0
+ 2300 035c FA        		.byte	-6
+ 2301 035d 43        		.byte	67
+ 2302 035e 00        		.byte	0
+ 2303 035f 80        		.byte	-128
+ 2304 0360 BB        		.byte	-69
+ 2305 0361 44        		.byte	68
+ 2306 0362 00        		.byte	0
+ 2307 0363 00        		.byte	0
+ 2308 0364 7A        		.byte	122
+ 2309 0365 44        		.byte	68
+ 2310 0366 00        		.byte	0
+ 2311 0367 00        		.byte	0
+ 2312 0368 FA        		.byte	-6
+ 2313 0369 43        		.byte	67
+ 2314 036a 00        		.byte	0
+ 2315 036b 80        		.byte	-128
+ 2316 036c 3B        		.byte	59
+ 2317 036d 44        		.byte	68
+ 2318 036e 00        		.byte	0
+ 2319 036f 00        		.byte	0
+ 2320 0370 7A        		.byte	122
+ 2321 0371 43        		.byte	67
+ 2322 0372 00        		.byte	0
+ 2323 0373 00        		.byte	0
+ 2324 0374 FA        		.byte	-6
+ 2325 0375 43        		.byte	67
+ 2326 0376 00        		.byte	0
+ 2327 0377 80        		.byte	-128
+ 2328 0378 BB        		.byte	-69
+ 2329 0379 44        		.byte	68
+ 2330 037a 00        		.byte	0
+ 2331 037b 80        		.byte	-128
+ 2332 037c BB        		.byte	-69
+ 2333 037d 44        		.byte	68
+ 2334 037e 00        		.byte	0
+ 2335 037f 00        		.byte	0
+ 2336 0380 FA        		.byte	-6
+ 2337 0381 43        		.byte	67
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 42
+
+
+ 2338 0382 00        		.byte	0
+ 2339 0383 00        		.byte	0
+ 2340 0384 FA        		.byte	-6
+ 2341 0385 43        		.byte	67
+ 2342 0386 00        		.byte	0
+ 2343 0387 00        		.byte	0
+ 2344 0388 FA        		.byte	-6
+ 2345 0389 43        		.byte	67
+ 2346 038a 00        		.byte	0
+ 2347 038b 80        		.byte	-128
+ 2348 038c 3B        		.byte	59
+ 2349 038d 44        		.byte	68
+ 2350 038e 00        		.byte	0
+ 2351 038f 00        		.byte	0
+ 2352 0390 7A        		.byte	122
+ 2353 0391 43        		.byte	67
+ 2354 0392 00        		.byte	0
+ 2355 0393 00        		.byte	0
+ 2356 0394 FA        		.byte	-6
+ 2357 0395 43        		.byte	67
+ 2358 0396 00        		.byte	0
+ 2359 0397 80        		.byte	-128
+ 2360 0398 BB        		.byte	-69
+ 2361 0399 44        		.byte	68
+ 2362 039a 00        		.byte	0
+ 2363 039b 00        		.byte	0
+ 2364 039c 00        		.byte	0
+ 2365 039d 00        		.byte	0
+ 2366               	.global	look_out_the_window
+ 2367               		.type	look_out_the_window, @object
+ 2368               		.size	look_out_the_window, 202
+ 2369               	look_out_the_window:
+ 2370 039e 7200      		.word	114
+ 2371 03a0 7200      		.word	114
+ 2372 03a2 7200      		.word	114
+ 2373 03a4 7200      		.word	114
+ 2374 03a6 5600      		.word	86
+ 2375 03a8 7200      		.word	114
+ 2376 03aa 7200      		.word	114
+ 2377 03ac 7200      		.word	114
+ 2378 03ae 7200      		.word	114
+ 2379 03b0 5600      		.word	86
+ 2380 03b2 7200      		.word	114
+ 2381 03b4 7200      		.word	114
+ 2382 03b6 5600      		.word	86
+ 2383 03b8 7200      		.word	114
+ 2384 03ba 9500      		.word	149
+ 2385 03bc 8F00      		.word	143
+ 2386 03be FEFF      		.word	-2
+ 2387 03c0 A100      		.word	161
+ 2388 03c2 A100      		.word	161
+ 2389 03c4 A100      		.word	161
+ 2390 03c6 A100      		.word	161
+ 2391 03c8 9500      		.word	149
+ 2392 03ca 8F00      		.word	143
+ 2393 03cc 8F00      		.word	143
+ 2394 03ce 8F00      		.word	143
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 43
+
+
+ 2395 03d0 8F00      		.word	143
+ 2396 03d2 8100      		.word	129
+ 2397 03d4 7200      		.word	114
+ 2398 03d6 7200      		.word	114
+ 2399 03d8 7200      		.word	114
+ 2400 03da 6100      		.word	97
+ 2401 03dc 6100      		.word	97
+ 2402 03de 5600      		.word	86
+ 2403 03e0 FEFF      		.word	-2
+ 2404 03e2 7200      		.word	114
+ 2405 03e4 7200      		.word	114
+ 2406 03e6 7200      		.word	114
+ 2407 03e8 7200      		.word	114
+ 2408 03ea 5600      		.word	86
+ 2409 03ec 7200      		.word	114
+ 2410 03ee 7200      		.word	114
+ 2411 03f0 7200      		.word	114
+ 2412 03f2 7200      		.word	114
+ 2413 03f4 5600      		.word	86
+ 2414 03f6 7200      		.word	114
+ 2415 03f8 7200      		.word	114
+ 2416 03fa 5600      		.word	86
+ 2417 03fc 7200      		.word	114
+ 2418 03fe 7200      		.word	114
+ 2419 0400 9500      		.word	149
+ 2420 0402 9500      		.word	149
+ 2421 0404 8F00      		.word	143
+ 2422 0406 FEFF      		.word	-2
+ 2423 0408 A100      		.word	161
+ 2424 040a A100      		.word	161
+ 2425 040c A100      		.word	161
+ 2426 040e A100      		.word	161
+ 2427 0410 9500      		.word	149
+ 2428 0412 8F00      		.word	143
+ 2429 0414 8F00      		.word	143
+ 2430 0416 8F00      		.word	143
+ 2431 0418 8F00      		.word	143
+ 2432 041a 8100      		.word	129
+ 2433 041c 7200      		.word	114
+ 2434 041e 7200      		.word	114
+ 2435 0420 7200      		.word	114
+ 2436 0422 8100      		.word	129
+ 2437 0424 8F00      		.word	143
+ 2438 0426 9500      		.word	149
+ 2439 0428 FEFF      		.word	-2
+ 2440 042a 6100      		.word	97
+ 2441 042c 2B00      		.word	43
+ 2442 042e 6100      		.word	97
+ 2443 0430 8100      		.word	129
+ 2444 0432 9500      		.word	149
+ 2445 0434 9500      		.word	149
+ 2446 0436 9500      		.word	149
+ 2447 0438 9500      		.word	149
+ 2448 043a 7200      		.word	114
+ 2449 043c 5600      		.word	86
+ 2450 043e 2B00      		.word	43
+ 2451 0440 5600      		.word	86
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 44
+
+
+ 2452 0442 7200      		.word	114
+ 2453 0444 FEFF      		.word	-2
+ 2454 0446 6100      		.word	97
+ 2455 0448 2B00      		.word	43
+ 2456 044a 6100      		.word	97
+ 2457 044c 8100      		.word	129
+ 2458 044e 9500      		.word	149
+ 2459 0450 9500      		.word	149
+ 2460 0452 9500      		.word	149
+ 2461 0454 9500      		.word	149
+ 2462 0456 9500      		.word	149
+ 2463 0458 A100      		.word	161
+ 2464 045a 9500      		.word	149
+ 2465 045c 8F00      		.word	143
+ 2466 045e 8100      		.word	129
+ 2467 0460 7200      		.word	114
+ 2468 0462 8100      		.word	129
+ 2469 0464 8F00      		.word	143
+ 2470 0466 FFFF      		.word	-1
+ 2471               	.global	tempo_look_out
+ 2472               		.type	tempo_look_out, @object
+ 2473               		.size	tempo_look_out, 404
+ 2474               	tempo_look_out:
+ 2475 0468 00        		.byte	0
+ 2476 0469 00        		.byte	0
+ 2477 046a 7A        		.byte	122
+ 2478 046b 43        		.byte	67
+ 2479 046c 00        		.byte	0
+ 2480 046d 00        		.byte	0
+ 2481 046e FA        		.byte	-6
+ 2482 046f 43        		.byte	67
+ 2483 0470 00        		.byte	0
+ 2484 0471 00        		.byte	0
+ 2485 0472 7A        		.byte	122
+ 2486 0473 43        		.byte	67
+ 2487 0474 00        		.byte	0
+ 2488 0475 00        		.byte	0
+ 2489 0476 FA        		.byte	-6
+ 2490 0477 43        		.byte	67
+ 2491 0478 00        		.byte	0
+ 2492 0479 00        		.byte	0
+ 2493 047a FA        		.byte	-6
+ 2494 047b 43        		.byte	67
+ 2495 047c 00        		.byte	0
+ 2496 047d 00        		.byte	0
+ 2497 047e 7A        		.byte	122
+ 2498 047f 43        		.byte	67
+ 2499 0480 00        		.byte	0
+ 2500 0481 00        		.byte	0
+ 2501 0482 FA        		.byte	-6
+ 2502 0483 43        		.byte	67
+ 2503 0484 00        		.byte	0
+ 2504 0485 00        		.byte	0
+ 2505 0486 7A        		.byte	122
+ 2506 0487 43        		.byte	67
+ 2507 0488 00        		.byte	0
+ 2508 0489 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 45
+
+
+ 2509 048a FA        		.byte	-6
+ 2510 048b 43        		.byte	67
+ 2511 048c 00        		.byte	0
+ 2512 048d 00        		.byte	0
+ 2513 048e FA        		.byte	-6
+ 2514 048f 43        		.byte	67
+ 2515 0490 00        		.byte	0
+ 2516 0491 00        		.byte	0
+ 2517 0492 7A        		.byte	122
+ 2518 0493 43        		.byte	67
+ 2519 0494 00        		.byte	0
+ 2520 0495 00        		.byte	0
+ 2521 0496 FA        		.byte	-6
+ 2522 0497 43        		.byte	67
+ 2523 0498 00        		.byte	0
+ 2524 0499 00        		.byte	0
+ 2525 049a 7A        		.byte	122
+ 2526 049b 43        		.byte	67
+ 2527 049c 00        		.byte	0
+ 2528 049d 00        		.byte	0
+ 2529 049e FA        		.byte	-6
+ 2530 049f 43        		.byte	67
+ 2531 04a0 00        		.byte	0
+ 2532 04a1 00        		.byte	0
+ 2533 04a2 FA        		.byte	-6
+ 2534 04a3 43        		.byte	67
+ 2535 04a4 00        		.byte	0
+ 2536 04a5 80        		.byte	-128
+ 2537 04a6 BB        		.byte	-69
+ 2538 04a7 44        		.byte	68
+ 2539 04a8 00        		.byte	0
+ 2540 04a9 00        		.byte	0
+ 2541 04aa 7A        		.byte	122
+ 2542 04ab 43        		.byte	67
+ 2543 04ac 00        		.byte	0
+ 2544 04ad 00        		.byte	0
+ 2545 04ae 7A        		.byte	122
+ 2546 04af 43        		.byte	67
+ 2547 04b0 00        		.byte	0
+ 2548 04b1 00        		.byte	0
+ 2549 04b2 FA        		.byte	-6
+ 2550 04b3 43        		.byte	67
+ 2551 04b4 00        		.byte	0
+ 2552 04b5 00        		.byte	0
+ 2553 04b6 7A        		.byte	122
+ 2554 04b7 43        		.byte	67
+ 2555 04b8 00        		.byte	0
+ 2556 04b9 00        		.byte	0
+ 2557 04ba FA        		.byte	-6
+ 2558 04bb 43        		.byte	67
+ 2559 04bc 00        		.byte	0
+ 2560 04bd 00        		.byte	0
+ 2561 04be FA        		.byte	-6
+ 2562 04bf 43        		.byte	67
+ 2563 04c0 00        		.byte	0
+ 2564 04c1 00        		.byte	0
+ 2565 04c2 7A        		.byte	122
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 46
+
+
+ 2566 04c3 43        		.byte	67
+ 2567 04c4 00        		.byte	0
+ 2568 04c5 00        		.byte	0
+ 2569 04c6 FA        		.byte	-6
+ 2570 04c7 43        		.byte	67
+ 2571 04c8 00        		.byte	0
+ 2572 04c9 00        		.byte	0
+ 2573 04ca 7A        		.byte	122
+ 2574 04cb 43        		.byte	67
+ 2575 04cc 00        		.byte	0
+ 2576 04cd 00        		.byte	0
+ 2577 04ce FA        		.byte	-6
+ 2578 04cf 43        		.byte	67
+ 2579 04d0 00        		.byte	0
+ 2580 04d1 00        		.byte	0
+ 2581 04d2 FA        		.byte	-6
+ 2582 04d3 43        		.byte	67
+ 2583 04d4 00        		.byte	0
+ 2584 04d5 00        		.byte	0
+ 2585 04d6 7A        		.byte	122
+ 2586 04d7 43        		.byte	67
+ 2587 04d8 00        		.byte	0
+ 2588 04d9 00        		.byte	0
+ 2589 04da FA        		.byte	-6
+ 2590 04db 43        		.byte	67
+ 2591 04dc 00        		.byte	0
+ 2592 04dd 00        		.byte	0
+ 2593 04de 7A        		.byte	122
+ 2594 04df 43        		.byte	67
+ 2595 04e0 00        		.byte	0
+ 2596 04e1 00        		.byte	0
+ 2597 04e2 FA        		.byte	-6
+ 2598 04e3 43        		.byte	67
+ 2599 04e4 00        		.byte	0
+ 2600 04e5 00        		.byte	0
+ 2601 04e6 FA        		.byte	-6
+ 2602 04e7 43        		.byte	67
+ 2603 04e8 00        		.byte	0
+ 2604 04e9 80        		.byte	-128
+ 2605 04ea BB        		.byte	-69
+ 2606 04eb 44        		.byte	68
+ 2607 04ec 00        		.byte	0
+ 2608 04ed 00        		.byte	0
+ 2609 04ee 7A        		.byte	122
+ 2610 04ef 43        		.byte	67
+ 2611 04f0 00        		.byte	0
+ 2612 04f1 00        		.byte	0
+ 2613 04f2 7A        		.byte	122
+ 2614 04f3 43        		.byte	67
+ 2615 04f4 00        		.byte	0
+ 2616 04f5 00        		.byte	0
+ 2617 04f6 FA        		.byte	-6
+ 2618 04f7 43        		.byte	67
+ 2619 04f8 00        		.byte	0
+ 2620 04f9 00        		.byte	0
+ 2621 04fa 7A        		.byte	122
+ 2622 04fb 43        		.byte	67
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 47
+
+
+ 2623 04fc 00        		.byte	0
+ 2624 04fd 00        		.byte	0
+ 2625 04fe FA        		.byte	-6
+ 2626 04ff 43        		.byte	67
+ 2627 0500 00        		.byte	0
+ 2628 0501 00        		.byte	0
+ 2629 0502 FA        		.byte	-6
+ 2630 0503 43        		.byte	67
+ 2631 0504 00        		.byte	0
+ 2632 0505 00        		.byte	0
+ 2633 0506 7A        		.byte	122
+ 2634 0507 43        		.byte	67
+ 2635 0508 00        		.byte	0
+ 2636 0509 00        		.byte	0
+ 2637 050a FA        		.byte	-6
+ 2638 050b 43        		.byte	67
+ 2639 050c 00        		.byte	0
+ 2640 050d 00        		.byte	0
+ 2641 050e 7A        		.byte	122
+ 2642 050f 43        		.byte	67
+ 2643 0510 00        		.byte	0
+ 2644 0511 00        		.byte	0
+ 2645 0512 FA        		.byte	-6
+ 2646 0513 43        		.byte	67
+ 2647 0514 00        		.byte	0
+ 2648 0515 00        		.byte	0
+ 2649 0516 FA        		.byte	-6
+ 2650 0517 43        		.byte	67
+ 2651 0518 00        		.byte	0
+ 2652 0519 00        		.byte	0
+ 2653 051a 7A        		.byte	122
+ 2654 051b 43        		.byte	67
+ 2655 051c 00        		.byte	0
+ 2656 051d 00        		.byte	0
+ 2657 051e FA        		.byte	-6
+ 2658 051f 43        		.byte	67
+ 2659 0520 00        		.byte	0
+ 2660 0521 00        		.byte	0
+ 2661 0522 7A        		.byte	122
+ 2662 0523 43        		.byte	67
+ 2663 0524 00        		.byte	0
+ 2664 0525 00        		.byte	0
+ 2665 0526 7A        		.byte	122
+ 2666 0527 43        		.byte	67
+ 2667 0528 00        		.byte	0
+ 2668 0529 00        		.byte	0
+ 2669 052a 7A        		.byte	122
+ 2670 052b 43        		.byte	67
+ 2671 052c 00        		.byte	0
+ 2672 052d 00        		.byte	0
+ 2673 052e 7A        		.byte	122
+ 2674 052f 43        		.byte	67
+ 2675 0530 00        		.byte	0
+ 2676 0531 00        		.byte	0
+ 2677 0532 7A        		.byte	122
+ 2678 0533 43        		.byte	67
+ 2679 0534 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 48
+
+
+ 2680 0535 80        		.byte	-128
+ 2681 0536 BB        		.byte	-69
+ 2682 0537 44        		.byte	68
+ 2683 0538 00        		.byte	0
+ 2684 0539 00        		.byte	0
+ 2685 053a 7A        		.byte	122
+ 2686 053b 43        		.byte	67
+ 2687 053c 00        		.byte	0
+ 2688 053d 00        		.byte	0
+ 2689 053e 7A        		.byte	122
+ 2690 053f 43        		.byte	67
+ 2691 0540 00        		.byte	0
+ 2692 0541 00        		.byte	0
+ 2693 0542 FA        		.byte	-6
+ 2694 0543 43        		.byte	67
+ 2695 0544 00        		.byte	0
+ 2696 0545 00        		.byte	0
+ 2697 0546 7A        		.byte	122
+ 2698 0547 43        		.byte	67
+ 2699 0548 00        		.byte	0
+ 2700 0549 00        		.byte	0
+ 2701 054a FA        		.byte	-6
+ 2702 054b 43        		.byte	67
+ 2703 054c 00        		.byte	0
+ 2704 054d 00        		.byte	0
+ 2705 054e FA        		.byte	-6
+ 2706 054f 43        		.byte	67
+ 2707 0550 00        		.byte	0
+ 2708 0551 00        		.byte	0
+ 2709 0552 7A        		.byte	122
+ 2710 0553 43        		.byte	67
+ 2711 0554 00        		.byte	0
+ 2712 0555 00        		.byte	0
+ 2713 0556 FA        		.byte	-6
+ 2714 0557 43        		.byte	67
+ 2715 0558 00        		.byte	0
+ 2716 0559 00        		.byte	0
+ 2717 055a 7A        		.byte	122
+ 2718 055b 43        		.byte	67
+ 2719 055c 00        		.byte	0
+ 2720 055d 00        		.byte	0
+ 2721 055e FA        		.byte	-6
+ 2722 055f 43        		.byte	67
+ 2723 0560 00        		.byte	0
+ 2724 0561 00        		.byte	0
+ 2725 0562 FA        		.byte	-6
+ 2726 0563 43        		.byte	67
+ 2727 0564 00        		.byte	0
+ 2728 0565 00        		.byte	0
+ 2729 0566 7A        		.byte	122
+ 2730 0567 43        		.byte	67
+ 2731 0568 00        		.byte	0
+ 2732 0569 00        		.byte	0
+ 2733 056a FA        		.byte	-6
+ 2734 056b 43        		.byte	67
+ 2735 056c 00        		.byte	0
+ 2736 056d 00        		.byte	0
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 49
+
+
+ 2737 056e 7A        		.byte	122
+ 2738 056f 43        		.byte	67
+ 2739 0570 00        		.byte	0
+ 2740 0571 00        		.byte	0
+ 2741 0572 FA        		.byte	-6
+ 2742 0573 43        		.byte	67
+ 2743 0574 00        		.byte	0
+ 2744 0575 00        		.byte	0
+ 2745 0576 FA        		.byte	-6
+ 2746 0577 43        		.byte	67
+ 2747 0578 00        		.byte	0
+ 2748 0579 80        		.byte	-128
+ 2749 057a BB        		.byte	-69
+ 2750 057b 44        		.byte	68
+ 2751 057c 00        		.byte	0
+ 2752 057d 00        		.byte	0
+ 2753 057e 7A        		.byte	122
+ 2754 057f 43        		.byte	67
+ 2755 0580 00        		.byte	0
+ 2756 0581 00        		.byte	0
+ 2757 0582 FA        		.byte	-6
+ 2758 0583 43        		.byte	67
+ 2759 0584 00        		.byte	0
+ 2760 0585 00        		.byte	0
+ 2761 0586 FA        		.byte	-6
+ 2762 0587 43        		.byte	67
+ 2763 0588 00        		.byte	0
+ 2764 0589 00        		.byte	0
+ 2765 058a FA        		.byte	-6
+ 2766 058b 43        		.byte	67
+ 2767 058c 00        		.byte	0
+ 2768 058d 00        		.byte	0
+ 2769 058e FA        		.byte	-6
+ 2770 058f 43        		.byte	67
+ 2771 0590 00        		.byte	0
+ 2772 0591 00        		.byte	0
+ 2773 0592 FA        		.byte	-6
+ 2774 0593 43        		.byte	67
+ 2775 0594 00        		.byte	0
+ 2776 0595 00        		.byte	0
+ 2777 0596 7A        		.byte	122
+ 2778 0597 43        		.byte	67
+ 2779 0598 00        		.byte	0
+ 2780 0599 00        		.byte	0
+ 2781 059a 7A        		.byte	122
+ 2782 059b 43        		.byte	67
+ 2783 059c 00        		.byte	0
+ 2784 059d 00        		.byte	0
+ 2785 059e 7A        		.byte	122
+ 2786 059f 44        		.byte	68
+ 2787 05a0 00        		.byte	0
+ 2788 05a1 00        		.byte	0
+ 2789 05a2 FA        		.byte	-6
+ 2790 05a3 43        		.byte	67
+ 2791 05a4 00        		.byte	0
+ 2792 05a5 00        		.byte	0
+ 2793 05a6 FA        		.byte	-6
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 50
+
+
+ 2794 05a7 43        		.byte	67
+ 2795 05a8 00        		.byte	0
+ 2796 05a9 00        		.byte	0
+ 2797 05aa FA        		.byte	-6
+ 2798 05ab 43        		.byte	67
+ 2799 05ac 00        		.byte	0
+ 2800 05ad 00        		.byte	0
+ 2801 05ae FA        		.byte	-6
+ 2802 05af 43        		.byte	67
+ 2803 05b0 00        		.byte	0
+ 2804 05b1 80        		.byte	-128
+ 2805 05b2 BB        		.byte	-69
+ 2806 05b3 44        		.byte	68
+ 2807 05b4 00        		.byte	0
+ 2808 05b5 00        		.byte	0
+ 2809 05b6 7A        		.byte	122
+ 2810 05b7 43        		.byte	67
+ 2811 05b8 00        		.byte	0
+ 2812 05b9 00        		.byte	0
+ 2813 05ba FA        		.byte	-6
+ 2814 05bb 43        		.byte	67
+ 2815 05bc 00        		.byte	0
+ 2816 05bd 00        		.byte	0
+ 2817 05be FA        		.byte	-6
+ 2818 05bf 43        		.byte	67
+ 2819 05c0 00        		.byte	0
+ 2820 05c1 00        		.byte	0
+ 2821 05c2 FA        		.byte	-6
+ 2822 05c3 43        		.byte	67
+ 2823 05c4 00        		.byte	0
+ 2824 05c5 00        		.byte	0
+ 2825 05c6 FA        		.byte	-6
+ 2826 05c7 43        		.byte	67
+ 2827 05c8 00        		.byte	0
+ 2828 05c9 00        		.byte	0
+ 2829 05ca FA        		.byte	-6
+ 2830 05cb 43        		.byte	67
+ 2831 05cc 00        		.byte	0
+ 2832 05cd 00        		.byte	0
+ 2833 05ce 7A        		.byte	122
+ 2834 05cf 43        		.byte	67
+ 2835 05d0 00        		.byte	0
+ 2836 05d1 00        		.byte	0
+ 2837 05d2 7A        		.byte	122
+ 2838 05d3 43        		.byte	67
+ 2839 05d4 00        		.byte	0
+ 2840 05d5 80        		.byte	-128
+ 2841 05d6 3B        		.byte	59
+ 2842 05d7 44        		.byte	68
+ 2843 05d8 00        		.byte	0
+ 2844 05d9 00        		.byte	0
+ 2845 05da 7A        		.byte	122
+ 2846 05db 43        		.byte	67
+ 2847 05dc 00        		.byte	0
+ 2848 05dd 00        		.byte	0
+ 2849 05de FA        		.byte	-6
+ 2850 05df 43        		.byte	67
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 51
+
+
+ 2851 05e0 00        		.byte	0
+ 2852 05e1 00        		.byte	0
+ 2853 05e2 FA        		.byte	-6
+ 2854 05e3 43        		.byte	67
+ 2855 05e4 00        		.byte	0
+ 2856 05e5 00        		.byte	0
+ 2857 05e6 FA        		.byte	-6
+ 2858 05e7 43        		.byte	67
+ 2859 05e8 00        		.byte	0
+ 2860 05e9 00        		.byte	0
+ 2861 05ea FA        		.byte	-6
+ 2862 05eb 43        		.byte	67
+ 2863 05ec 00        		.byte	0
+ 2864 05ed 00        		.byte	0
+ 2865 05ee FA        		.byte	-6
+ 2866 05ef 43        		.byte	67
+ 2867 05f0 00        		.byte	0
+ 2868 05f1 00        		.byte	0
+ 2869 05f2 FA        		.byte	-6
+ 2870 05f3 43        		.byte	67
+ 2871 05f4 00        		.byte	0
+ 2872 05f5 00        		.byte	0
+ 2873 05f6 7A        		.byte	122
+ 2874 05f7 44        		.byte	68
+ 2875 05f8 00        		.byte	0
+ 2876 05f9 00        		.byte	0
+ 2877 05fa 00        		.byte	0
+ 2878 05fb 00        		.byte	0
+ 2879               	.global	song_list
+ 2880               		.type	song_list, @object
+ 2881               		.size	song_list, 6
+ 2882               	song_list:
+ 2883 05fc 0000      		.word	jinglebel
+ 2884 05fe 0000      		.word	silent_night
+ 2885 0600 0000      		.word	look_out_the_window
+ 2886               	.global	tempo_list
+ 2887               		.type	tempo_list, @object
+ 2888               		.size	tempo_list, 6
+ 2889               	tempo_list:
+ 2890 0602 0000      		.word	tempo_jinglebel
+ 2891 0604 0000      		.word	tempo_silent_night
+ 2892 0606 0000      		.word	tempo_look_out
+ 2893               	.global	warm
+ 2894               		.type	warm, @object
+ 2895               		.size	warm, 4
+ 2896               	warm:
+ 2897 0608 6A        		.byte	106
+ 2898 0609 77        		.byte	119
+ 2899 060a 50        		.byte	80
+ 2900 060b 55        		.byte	85
+ 2901               	.global	cold
+ 2902               		.type	cold, @object
+ 2903               		.size	cold, 4
+ 2904               	cold:
+ 2905 060c 58        		.byte	88
+ 2906 060d 5C        		.byte	92
+ 2907 060e 38        		.byte	56
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 52
+
+
+ 2908 060f 5E        		.byte	94
+ 2909               		.comm TaskStk,1024,1
+ 2910               		.comm enable_temp,2,1
+ 2911               		.comm choice_temp_grp,2,1
+ 2912               		.comm choice_speed_grp,2,1
+ 2913               		.comm choice_task,2,1
+ 2914               		.comm mbox_tone,2,1
+ 2915               		.comm state,2,1
+ 2916               		.comm tone,2,1
+ 2917               		.comm pointer,2,1
+ 2918               		.comm light,2,1
+ 2919               		.comm temp,2,1
+ 2920               		.comm choice_temp,2,1
+ 2921               		.comm song,2,1
+ 2922               		.comm task,2,1
+ 2923               		.comm err,1,1
+ 2924               	.global __do_copy_data
+ 2925               	.global __do_clear_bss
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 53
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 project.c
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2      *ABS*:0000003f __SREG__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:3      *ABS*:0000003e __SP_H__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:4      *ABS*:0000003d __SP_L__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:5      *ABS*:00000034 __CCP__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:11     .text:00000000 __vector_10
+                            *COM*:00000002 state
+                            *COM*:00000002 tone
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:51     .text:0000004e init_adc
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:62     .text:00000056 read_adc
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:82     .text:0000006e InitI2C
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:100    .text:0000008a write_twi_1byte_nopreset
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:160    .text:0000010c write_twi_0byte_nopreset
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:209    .text:00000172 ReadTemperature
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:253    .text:000001cc showToneLEDTask
+                            *COM*:00000002 mbox_tone
+                            *COM*:00000001 err
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:295    .text:0000021c showSpeedTask
+                            *COM*:00000002 choice_task
+                            *COM*:00000002 choice_speed_grp
+                            *COM*:00000002 light
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1571   .data:00000000 digit
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1585   .data:0000000a fnd_sel
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:425    .text:00000320 showTempLEDTask
+                            *COM*:00000002 enable_temp
+                            *COM*:00000002 temp
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:483    .text:0000039a showWarmOrColdTask
+                            *COM*:00000002 choice_temp_grp
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2896   .data:00000608 warm
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2904   .data:0000060c cold
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:573    .text:00000448 showTempTask
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:705    .text:00000554 PlaySongTask
+                            *COM*:00000002 song
+                            *COM*:00000002 pointer
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2882   .data:000005fc song_list
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2889   .data:00000602 tempo_list
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1108   .text:00000898 readLightTask
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1155   .text:000008f0 TemperatureTask
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1210   .text:0000095e __vector_5
+                            *COM*:00000002 task
+                            *COM*:00000002 choice_temp
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1323   .text:00000a50 __vector_6
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1420   .text:00000b0a main
+                            *COM*:00000400 TaskStk
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1593   .data:0000000e jinglebel
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:1702   .data:000000e0 tempo_jinglebel
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2126   .data:00000284 silent_night
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2177   .data:000002e2 tempo_silent_night
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2369   .data:0000039e look_out_the_window
+C:\Users\chank\AppData\Local\Temp/ccX5oy71.s:2474   .data:00000468 tempo_look_out
+
+UNDEFINED SYMBOLS
+OSMboxPend
+__divmodhi4
+GAS LISTING C:\Users\chank\AppData\Local\Temp/ccX5oy71.s 			page 54
+
+
+OSTimeDlyHMSM
+OSFlagPend
+__udivmodqi4
+__floatsisf
+__gtsf2
+OSMboxPost
+__mulsf3
+__ltsf2
+__fixunssfsi
+__lesf2
+OSFlagPost
+OSInit
+OSFlagCreate
+OSMboxCreate
+OSTaskCreate
+OSStart
+__do_copy_data
+__do_clear_bss
